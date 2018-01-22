@@ -1,0 +1,22 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~', '~/.config']
+
+- link:
+    ~/.bash:
+    ~/.bash_profile:
+    ~/.bashrc:
+    ~/.dotfiles: ''
+    ~/.emacs.d:
+    ~/.emacs:
+    ~/.gitconfig:
+    ~/.gitignore_global:
+    ~/.inputrc:
+    ~/.tmux.conf:
+    ~/.vim:
+    ~/.vimrc:
+
+- shell:
