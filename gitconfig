@@ -1,0 +1,24 @@
+[alias]
+  exec = ! "exec"
+  st = status -sb
+  aa = add --all :/
+  ci = commit
+  cm = commit -m '.'
+  co = checkout
+  di = diff
+  pullrb = pull --rebase
+
+[color]
+  ui = auto
+
+[user]
+  useConfigOnly = true
+	name = mikejqzhang
+	email = mikejqzhang@gmail.com
+
+[core]
+  excludesfile = ~/.gitignore_global
+
+# Allow local customizations in the .gitconfig_local file
+[include]
+  path = ~/.gitconfig_local
