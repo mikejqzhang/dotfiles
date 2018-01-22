@@ -6,7 +6,7 @@
 - clean: ['~', '~/.config']
 
 - link:
-    ~/.bash:
+    ~/.bash: bash
     ~/.bash_profile:
     ~/.bashrc:
     ~/.dotfiles: ''
@@ -21,4 +21,3 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
-
