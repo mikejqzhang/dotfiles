@@ -1,3 +1,11 @@
+# TESTING
+bindkey -M viins 'jk' vi-cmd-mode
+bindkey -M viins 'kj' vi-cmd-mode
+e vim cli mode
+bindkey '^P' up-history
+bindkey '^N' down-history
+
+
 # External settings
 source ~/.shell/external.sh
 
