@@ -4,6 +4,9 @@ source ~/.shell/external.sh
 # Aliases
 source ~/.shell/aliases.sh
 
+# Prompt
+source ~/.zsh/prompt.zsh
+
 # Lines configured by zsh-newuser-install
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=1048576
