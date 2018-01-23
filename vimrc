@@ -105,13 +105,13 @@ let g:airline_symbols.space = "\ua0"
 
 
 "---------------------
-" Leader Shortcuts
+" Personal Shortcuts
 "---------------------
 
 let mapleader = ","
 
 "---- "Editing" ----"
-nnoremap <leader>l :set rnu!<cr>
+nnoremap <C-n> :set rnu!<cr>
 nnoremap <leader>v :set paste!<cr>
 nnoremap <leader>ww :%s/\s\+$//g<cr>
 nnoremap <leader>ee gg=G<cr>
