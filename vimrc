@@ -24,7 +24,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'kien/ctrlp.vim'
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/vim-easy-align'
@@ -145,10 +145,11 @@ set scrolloff=5 " buffer 5 lines from top & bottom (when possible)
 set showcmd
 set noshowmode
 set showmatch " show matching highlighted parens
-set colorcolumn=80 " show line character limit
+set colorcolumn=100 " show line character limit
 
 " 2-space soft tabs
 filetype indent plugin on " enable filetype detection
+set smarttab
 set expandtab
 set tabstop=2
 set shiftwidth=2
