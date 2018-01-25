@@ -145,7 +145,7 @@ set scrolloff=5 " buffer 5 lines from top & bottom (when possible)
 set showcmd
 set noshowmode
 set showmatch " show matching highlighted parens
-set colorcolumn=100 " show line character limit
+set colorcolumn=101 " show line character limit
 
 " 2-space soft tabs
 filetype indent plugin on " enable filetype detection
