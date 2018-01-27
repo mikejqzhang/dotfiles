@@ -7,7 +7,6 @@
   co = checkout
   di = diff
   pullrb = pull --rebase
-  pp = push
 
 [color]
   ui = auto

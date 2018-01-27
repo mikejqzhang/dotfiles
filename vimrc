@@ -6,8 +6,12 @@
 set nocompatible
 
 " fight me
-imap jk <esc>
+" imap jk <esc>
 imap kj <esc>
+
+" jump visual lines for line-wrapping
+nmap j gj
+nmap k gk
 
 " system clipboard
 set clipboard=unnamed
