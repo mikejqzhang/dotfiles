@@ -159,6 +159,9 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 
+" 4 space tabs only in python
+autocmd Filetype python setlocal ts=4 sw=4 sts=0 expandtab
+
 " smart case-sensitive search
 set ignorecase
 set smartcase
