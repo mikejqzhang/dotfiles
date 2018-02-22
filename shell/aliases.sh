@@ -54,6 +54,12 @@ up()
 alias sublime='open -a Sublime\ Text .'
 
 # ----------------
+# Conda Aliases
+# ----------------
+alias csa='source activate'
+alias cda='source deactivate'
+
+# ----------------
 # ssh Aliases
 # ----------------
 
