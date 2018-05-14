@@ -58,10 +58,13 @@ alias sublime='open -a Sublime\ Text .'
 # ----------------
 alias csa='source activate'
 alias cda='source deactivate'
+alias cls='conda env list'
 
 # ----------------
 # ssh Aliases
 # ----------------
+
+alias foch='ssh mjqzhang@foch.cs.washington.edu'
 
 attu()
 {
