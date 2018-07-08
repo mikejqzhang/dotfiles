@@ -1,12 +1,14 @@
 [alias]
-  exec = ! "exec"
-  st = status -sb
-  aa = add --all :/
-  ci = commit
-  cm = commit -m '.'
-  co = checkout
-  di = diff
-  pullrb = pull --rebase
+  exec    = ! "exec"
+  st      = status -sb
+  a       = add
+  aa      = add --all :/
+  ci      = commit
+  cm      = "!f() { git commit -m \"$@\" ; }; f"
+  ucm     = reset HEAD^
+  co      = checkout
+  di      = diff
+  pullrb  = pull --rebase
 
 [color]
   ui = auto
