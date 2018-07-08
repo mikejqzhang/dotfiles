@@ -17,6 +17,9 @@ alias mv='mv -i'
 # Personal
 alias cl='clear'
 
+# LaTeX aliases
+alias pdflatexrm='rm *.aux *.log *.toc *.out *.bbl *.blg'
+
 # Update dotfiles
 dfu() {
   (
