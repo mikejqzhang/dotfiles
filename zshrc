@@ -1,10 +1,18 @@
-# TESTING
-bindkey -M viins 'jk' vi-cmd-mode
-bindkey -M viins 'kj' vi-cmd-mode
-e vim cli mode
-bindkey '^P' up-history
-bindkey '^N' down-history
+# Allow local customizations in the ~/.shell_local_before file
+if [ -f ~/.shell_local_before ]; then
+    source ~/.shell_local_before
+fi
 
+# Allow local customizations in the ~/.zshrc_local_before file
+if [ -f ~/.zshrc_local_before ]; then
+    source ~/.zshrc_local_before
+fi
+
+# External plugins (initialized before)
+source ~/.zsh/plugins_before.zsh
+
+# Settings
+source ~/.zsh/settings.zsh
 
 # External settings
 source ~/.shell/external.sh
@@ -15,16 +23,15 @@ source ~/.shell/aliases.sh
 # Prompt
 source ~/.zsh/prompt.zsh
 
-# Lines configured by zsh-newuser-install
-HISTFILE=$HOME/.zsh_history
-HISTSIZE=1048576
-SAVEHIST=$HISTSIZE
-setopt appendhistory autocd
-bindkey -v
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename '/Users/michael/.zshrc'
+# External plugins (initialized after)
+source ~/.zsh/plugins_after.zsh
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
+# Allow local customizations in the ~/.shell_local_after file
+if [ -f ~/.shell_local_after ]; then
+    source ~/.shell_local_after
+fi
+
+# Allow local customizations in the ~/.zshrc_local_after file
+if [ -f ~/.zshrc_local_after ]; then
+    source ~/.zshrc_local_after
+fi

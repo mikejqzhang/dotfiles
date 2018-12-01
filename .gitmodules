@@ -1,3 +1,30 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+[submodule "emacs.d/vendor/use-package"]
+	path = emacs.d/vendor/use-package
+	url = https://github.com/jwiegley/use-package.git
+[submodule "emacs.d/vendor/undo-tree"]
+	path = emacs.d/vendor/undo-tree
+	url = https://github.com/emacsmirror/undo-tree.git
+[submodule "emacs.d/vendor/evil"]
+	path = emacs.d/vendor/evil
+	url = https://github.com/emacs-evil/evil.git
+[submodule "emacs.d/vendor/evil-leader"]
+	path = emacs.d/vendor/evil-leader
+	url = https://github.com/cofi/evil-leader.git
+[submodule "emacs.d/vendor/emacs-neotree"]
+	path = emacs.d/vendor/emacs-neotree
+	url = https://github.com/jaypei/emacs-neotree.git
+[submodule "emacs.d/vendor/emacs-color-theme-solarized"]
+	path = emacs.d/vendor/emacs-color-theme-solarized
+	url = https://github.com/sellout/emacs-color-theme-solarized.git
+[submodule "zsh/plugins/zsh-syntax-highlighting"]
+	path = zsh/plugins/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "zsh/plugins/zsh-completions"]
+	path = zsh/plugins/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions.git
+[submodule "shell/plugins/dircolors-solarized"]
+	path = shell/plugins/dircolors-solarized
+	url = https://github.com/seebi/dircolors-solarized.git

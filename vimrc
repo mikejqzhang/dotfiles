@@ -14,7 +14,11 @@ nmap j gj
 nmap k gk
 
 " system clipboard
-set clipboard=unnamed
+" set clipboard=unnamed
+
+" system clipboard
+set lazyredraw
+
 
 
 "---------------------
@@ -28,7 +32,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'kien/ctrlp.vim'
-" Plug 'ervandew/supertab'
+Plug 'ervandew/supertab'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/vim-easy-align'
@@ -42,6 +46,11 @@ Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
+
+"---------------------
+" Ctrl-P
+"---------------------
+let g:ctrlp_working_path_mode = 0
 
 "---------------------
 " Syntastic
@@ -138,7 +147,7 @@ nnoremap <leader>t :TagbarToggle<cr>
 " basic editing config
 "---------------------
 set nu " line numbers
-set rnu " relative line numbers
+" set rnu " relative line numbers slowaf
 set cursorline " highlight selected line
 set incsearch " incremental search
 set hls " highlighted search
@@ -146,9 +155,9 @@ set listchars=tab:>>,nbsp:~
 set lbr
 set ruler
 set scrolloff=5 " buffer 5 lines from top & bottom (when possible)
-set showcmd
-set noshowmode
-set showmatch " show matching highlighted parens
+" set showcmd
+" set noshowmode
+" set showmatch " show matching highlighted parens
 set colorcolumn=101 " show line character limit
 
 " 2-space soft tabs

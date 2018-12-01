@@ -1,3 +1,4 @@
+
 # pip should only run if there is a virtualenv currently activated
 # Now just here to make sure pip doesn't by default work as to not install globally
 # My package installations are done almost entirely in conda environments now so this
@@ -8,3 +9,8 @@ alias pip_off='export PIP_REQUIRE_VIRTUALENV=true'
 
 # Cache pip-installed packages to avoid re-downloading
 export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
+
+# TODO: Change pip stuff to be only ok in conda envs with:
+# if [ "$CONDA_PREFIX" = "" ]; then
+#   is bad
+# fi
