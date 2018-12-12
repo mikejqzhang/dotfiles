@@ -9,6 +9,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 call pathogen#helptags()
 
+
 "---------------------
 " defaults
 "---------------------
@@ -46,7 +47,7 @@ set shiftwidth=2
 set softtabstop=2
 
 " 4 space tabs only in python
-autocmd Filetype python setlocal ts=4 sw=4 sts=0 expandtab
+autocmd Filetype python setlocal ts=4 sw=4 sts=0
 
 " smart case-sensitive search
 set ignorecase
@@ -57,8 +58,8 @@ set ttimeoutlen=50
 set noerrorbells visualbell t_vb=
 
 " Tab copletion for files/buffer
-set wildmode=longest,list
 set wildmenu
+set wildmode=longest,list
 
 " Change vim splits to act like tmux
 set splitbelow
@@ -97,13 +98,12 @@ nnoremap <C-w><C-j> :res -5<CR>
 nnoremap <C-w><C-k> :res +5<CR>
 nnoremap <C-w><C-l> :vertical resize -10<CR>
 
-" set clipboard=unnamed " Sets to use system clipboard
-
 nnoremap <C-n> :set rnu!<CR>
 nnoremap <leader>v :set paste!<CR>
 nnoremap <leader>ww :%s/\s\+$//g<CR>
 nnoremap <leader>ee gg=G<CR>
 
+"" set clipboard=unnamed " Sets to use system clipboard
 
 
 "---------------------
@@ -129,6 +129,7 @@ let g:syntastic_mode_map = {
       \ 'active_filetypes': [],
       \ 'passive_filetypes': []
       \}
+
 nnoremap <leader>s :SyntasticCheck<CR>
 nnoremap <leader>r :SyntasticReset<CR>
 nnoremap <leader>i :SyntasticInfo<CR>

@@ -7,13 +7,13 @@ fi
 if [ -f ~/.zshrc_local_before ]; then
     source ~/.zshrc_local_before
 fi
-
-# External plugins (initialized before)
+# 
+# # External plugins (initialized before)
 source ~/.zsh/plugins_before.zsh
 
 # Settings
 source ~/.zsh/settings.zsh
-
+# 
 # External settings
 source ~/.shell/external.sh
 
