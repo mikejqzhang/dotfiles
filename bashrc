@@ -13,6 +13,8 @@ if [ -f ~/.bashrc_local_before ]; then
     source ~/.bashrc_local_before
 fi
 
+export TERM=xterm-256color
+
 # Settings
 source ~/.bash/settings.bash
 
