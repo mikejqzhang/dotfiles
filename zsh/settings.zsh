@@ -1,22 +1,33 @@
-# TESTING
+# Initialize completion
+autoload -Uz compinit && compinit -i
+zstyle ':completion:*' menu select=4
+zmodload zsh/complist
+
+# Use vim style navigation keys in menu completion
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
+# Initialize editing command line
+autoload -U edit-command-line && zle -N edit-command-line
+
+# Set automatic cd (typing directory name with no 'cd')
+setopt autocd
+
+# Enable interactive comments (# on the command line)
+setopt interactivecomments
 
 # Nicer history
 HISTSIZE=1048576
-HISTFILE=$HOME/.zsh_history
+HISTFILE="$HOME/.zsh_history"
+SAVEHIST=$HISTSIZE
 setopt appendhistory
 setopt incappendhistory
 setopt extendedhistory
 
-# Keybindings
-bindkey -v
-bindkey -M viins 'jk' vi-cmd-mode
-bindkey -M viins 'kj' vi-cmd-mode
-bindkey '^P' up-history
-bindkey '^N' down-history
-
-# Movement
-bindkey -a 'gg' beginning-of-buffer-or-history
-bindkey -a 'G' end-of-buffer-or-history
+# Time to wait for additional characters in a sequence
+KEYTIMEOUT=1 # corresponds to 10ms
 
 # Use vim as the editor
 export EDITOR=vim
