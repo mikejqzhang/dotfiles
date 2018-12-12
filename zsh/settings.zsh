@@ -9,6 +9,16 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 
+# fight me
+bindkey jk vi-cmd-mode
+bindkey kj vi-cmd-mode
+
+# emacs things in insert mode
+bindkey "^P" up-line-or-history
+bindkey "^N" down-line-or-history
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
+
 # Initialize editing command line
 autoload -U edit-command-line && zle -N edit-command-line
 
@@ -27,7 +37,7 @@ setopt incappendhistory
 setopt extendedhistory
 
 # Time to wait for additional characters in a sequence
-KEYTIMEOUT=1 # corresponds to 10ms
+KEYTIMEOUT=10 # corresponds to 100ms
 
 # Use vim as the editor
 export EDITOR=vim

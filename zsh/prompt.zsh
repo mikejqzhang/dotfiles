@@ -14,29 +14,29 @@ setopt prompt_subst
 # Load color variables to make it easier to color things
 autoload -U colors && colors
 
-# # Make using 256 colors easier
-# if [[ "$(tput colors)" == "256" ]]; then
-#     source ~/.zsh/plugins/spectrum.zsh
-#     # change default colors
-#     fg[red]=$FG[160]
-#     fg[green]=$FG[064]
-#     fg[yellow]=$FG[136]
-#     fg[blue]=$FG[033]
-#     fg[magenta]=$FG[125]
-#     fg[cyan]=$FG[037]
-# 
-#     fg[teal]=$FG[041]
-#     fg[orange]=$FG[166]
-#     fg[violet]=$FG[061]
-#     fg[neon]=$FG[112]
-#     fg[pink]=$FG[183]
-# else
-#     fg[teal]=$fg[blue]
-#     fg[orange]=$fg[yellow]
-#     fg[violet]=$fg[magenta]
-#     fg[neon]=$fg[green]
-#     fg[pink]=$fg[magenta]
-# fi
+# Make using 256 colors easier
+if [[ "$(tput colors)" == "256" ]]; then
+    source ~/.zsh/spectrum.zsh
+    # change default colors
+    fg[red]=$FG[160]
+    fg[green]=$FG[064]
+    fg[yellow]=$FG[136]
+    fg[blue]=$FG[033]
+    fg[magenta]=$FG[125]
+    fg[cyan]=$FG[037]
+
+    fg[teal]=$FG[041]
+    fg[orange]=$FG[166]
+    fg[violet]=$FG[061]
+    fg[neon]=$FG[112]
+    fg[pink]=$FG[183]
+else
+    fg[teal]=$fg[blue]
+    fg[orange]=$fg[yellow]
+    fg[violet]=$fg[magenta]
+    fg[neon]=$fg[green]
+    fg[pink]=$fg[magenta]
+fi
 
 # Current directory, truncated to 3 path elements (or 4 when one of them is "~")
 # The number of elements to keep can be specified as ${1}
@@ -110,8 +110,10 @@ function RPR_HOST() {
     colors=(cyan green yellow red pink)
     local index=$(python <<EOF
 import hashlib
+
 hash = int(hashlib.sha1('$(machine_name)'.encode('utf8')).hexdigest(), 16)
 index = hash % ${#colors} + 1
+
 print(index)
 EOF
     )
