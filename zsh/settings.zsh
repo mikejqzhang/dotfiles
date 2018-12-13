@@ -3,23 +3,7 @@ autoload -Uz compinit && compinit -i
 zstyle ':completion:*' menu select=4
 zmodload zsh/complist
 
-# Use vim style navigation keys in menu completion
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
-
-# fight me
-bindkey jk vi-cmd-mode
-bindkey kj vi-cmd-mode
-
-# emacs things in insert mode
-bindkey "^P" up-line-or-history
-bindkey "^N" down-line-or-history
-bindkey "^A" beginning-of-line
-bindkey "^E" end-of-line
-
-# Initialize editing command line
+# Initialize editing command line (must be donne before bindkey stuff)
 autoload -U edit-command-line && zle -N edit-command-line
 
 # Set automatic cd (typing directory name with no 'cd')
@@ -44,6 +28,19 @@ export EDITOR=vim
 
 # Use vim style line editing in zsh
 bindkey -v
+# Use vim style navigation keys in menu completion
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+# fight me
+bindkey jk vi-cmd-mode
+bindkey kj vi-cmd-mode
+# emacs things in insert mode
+bindkey "^P" up-line-or-history
+bindkey "^N" down-line-or-history
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
 # Movement
 bindkey -a 'gg' beginning-of-buffer-or-history
 bindkey -a 'G' end-of-buffer-or-history
