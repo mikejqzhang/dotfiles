@@ -137,7 +137,7 @@ function RPR_INFO() {
 
 # Set RHS prompt for git repositories
 DIFF_SYMBOL="-"
-GIT_PROMPT_SYMBOL=""
+GIT_PROMPT_SYMBOL="%{$fg[blue]%} on %{$reset_color%}"
 GIT_PROMPT_PREFIX="%{$fg[violet]%}%B(%b%{$reset_color%}"
 GIT_PROMPT_SUFFIX="%{$fg[violet]%}%B)%b%{$reset_color%}"
 GIT_PROMPT_AHEAD="%{$fg[teal]%}%B+NUM%b%{$reset_color%}"
@@ -213,7 +213,7 @@ function git_prompt_string() {
     if [[ "${RPR_SHOW_GIT}" == "true" ]]; then
         local git_where="$(parse_git_branch)"
         local git_detached="$(parse_git_detached)"
-        [ -n "$git_where" ] && echo " $GIT_PROMPT_SYMBOL$(parse_git_state)$GIT_PROMPT_PREFIX%{$fg[magenta]%}%B${git_where#(refs/heads/|tags/)}%b$git_detached$GIT_PROMPT_SUFFIX"
+        [ -n "$git_where" ] && echo "$GIT_PROMPT_SYMBOL$(parse_git_state)$GIT_PROMPT_PREFIX%{$fg[magenta]%}%B${git_where#(refs/heads/|tags/)}%b$git_detached$GIT_PROMPT_SUFFIX"
     fi
 }
 
