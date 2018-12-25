@@ -109,15 +109,21 @@ nnoremap <leader>ee gg=G<CR>
 "---------------------
 " Plugin configuration
 "---------------------
+" ===== "buffergator" =====
+" buffergator
+let g:buffergator_suppress_keymaps = 1
+nnoremap <Leader>b :BuffergatorToggle<CR>
+
+" ===== "ctrl-p" =====
+let g:ctrlp_working_path_mode = 'ra'
+nnoremap <C-b> :CtrlPBuffer<CR>
+
 
 " ===== "lightline" =====
 set laststatus=2 " required for lightline to show up
 " TODO: Configure lightline
 let g:lightline = {'colorscheme': 'solarized'}
 
-" ===== "ctrl-p" =====
-" TODO: Add in buffer stuff
-let g:ctrlp_working_path_mode = 'ra'
 
 " ===== "syntastic" =====
 " TODO: understand these settings
