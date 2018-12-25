@@ -101,9 +101,27 @@ nnoremap <C-w><C-l> :vertical resize -10<CR>
 nnoremap <C-n> :set rnu!<CR>
 nnoremap <leader>v :set paste!<CR>
 nnoremap <leader>ww :%s/\s\+$//g<CR>
-nnoremap <leader>ee gg=G<CR>
 
 "" set clipboard=unnamed " Sets to use system clipboard
+
+"---------------------
+" tabs config
+"---------------------
+noremap <C-w>c :tabnew<CR>
+noremap <C-w>n :tabnext<CR>
+noremap <C-w>p :tabprev<CR>
+autocmd TabLeave * let g:lasttab = tabpagenr()
+noremap <C-w>l :exe "tabn ".g:lasttab<CR>
+
+noremap <C-w>1 1gt
+noremap <C-w>2 2gt
+noremap <C-w>3 3gt
+noremap <C-w>4 4gt
+noremap <C-w>5 5gt
+noremap <C-w>6 6gt
+noremap <C-w>7 7gt
+noremap <C-w>8 8gt
+noremap <C-w>9 9gt
 
 
 "---------------------
@@ -122,7 +140,7 @@ nnoremap <C-b> :CtrlPBuffer<CR>
 " ===== "lightline" =====
 set laststatus=2 " required for lightline to show up
 " TODO: Configure lightline
-let g:lightline = {'colorscheme': 'solarized'}
+let g:lightline = {'colorscheme': 'solarized', 'enable': {'statusline': 1, 'tabline': 1}}
 
 
 " ===== "syntastic" =====
