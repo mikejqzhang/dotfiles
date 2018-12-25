@@ -28,7 +28,7 @@ set scrolloff=5 " buffer 5 lines from top & bottom (when possible)
 set showcmd " show current command
 set noshowmode
 set showmatch " show matching highlighted parens
-set colorcolumn=101 " show line character limit
+set colorcolumn=81 " show line character limit
 
 set lazyredraw " skip redrawing screen in some cases
 set history=10000 " more history
@@ -140,7 +140,10 @@ nnoremap <C-b> :CtrlPBuffer<CR>
 " ===== "lightline" =====
 set laststatus=2 " required for lightline to show up
 " TODO: Configure lightline
-let g:lightline = {'colorscheme': 'solarized', 'enable': {'statusline': 1, 'tabline': 1}}
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'enable': {'statusline': 1, 'tabline': 1}
+      \ }
 
 
 " ===== "syntastic" =====
@@ -166,8 +169,10 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd BufEnter * lcd %:p:h
 
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='.  a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-  exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'.  a:extension .'$#'
+  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. 
+        \ a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+  exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. 
+        \ a:extension .'$#'
 endfunction
 
 call NERDTreeHighlightFile('py', 'green', 'none', 'green', '#151515')
