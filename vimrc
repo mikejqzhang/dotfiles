@@ -185,6 +185,8 @@ nnoremap <leader>f :NERDTreeFind<CR>
 " a e s t h e t i c
 syntax enable
 set background=dark
+
+let g:solarized_termcolors = 16
 colorscheme solarized " This must be set after all solarized things
 
 
