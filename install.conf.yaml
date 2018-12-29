@@ -6,15 +6,11 @@
 - clean: ['~', '~/.config']
 
 - link:
-    ~/.bash: bash
+    ~/.bash:
     ~/.bash_profile:
     ~/.bashrc:
-    ~/.dotfiles: ''
-    ~/.emacs.d:
-    ~/.emacs:
     ~/.gitconfig:
     ~/.gitignore_global:
-    ~/.inputrc:
     ~/.shell:
     ~/.tmux.conf:
     ~/.vim:
