@@ -17,8 +17,9 @@ HISTSIZE=1048576
 HISTFILE="$HOME/.zsh_history"
 SAVEHIST=$HISTSIZE
 setopt appendhistory
-setopt incappendhistory
 setopt extendedhistory
+setopt incappendhistory
+setopt sharehistory
 
 # Time to wait for additional characters in a sequence
 KEYTIMEOUT=10 # corresponds to 100ms
