@@ -186,6 +186,12 @@ nnoremap <leader>f :NERDTreeFind<CR>
 syntax enable
 set background=dark
 
+
+let g:solarized_bold = 0
+let g:solarized_underline = 0
+let g:solarized_italic = 0
+let g:solarized_visibility = 'high'
+let g:solarized_contrast = 'high'
 let g:solarized_termcolors = 16
 colorscheme solarized " This must be set after all solarized things
 
