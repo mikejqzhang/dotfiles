@@ -3,8 +3,8 @@
   st      = status -sb
   a       = add
   aa      = add --all :/
-  ci      = commit
-  cm      = "!f() { git commit -m \"$@\" ; }; f"
+  ci      = commit -v
+  cm      = "!f() { git commit -v -m \"$@\" ; }; f"
   ucm     = reset HEAD^
   co      = checkout
   di      = diff
