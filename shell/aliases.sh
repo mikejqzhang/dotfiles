@@ -1,5 +1,5 @@
 # ----------------
-# Personal Aliases
+# Personal aliases
 # ----------------
 
 # Use colors in coreutils utilities output
@@ -10,7 +10,7 @@ alias grep='grep --color'
 alias ll='ls -lah'
 alias la='ls -A'
 
-# Aliases to protect against overwriting
+# aliases to protect against overwriting
 alias cp='cp -i'
 alias mv='mv -i'
 
@@ -52,19 +52,19 @@ up()
 
 
 # ----------------
-# Application Aliases
+# Application aliases
 # ----------------
 alias sublime='open -a Sublime\ Text .'
 
 # ----------------
-# Conda Aliases
+# Conda aliases
 # ----------------
 alias csa='source activate'
 alias cda='source deactivate'
 alias cls='conda env list'
 
 # ----------------
-# ssh Aliases
+# ssh aliases
 # ----------------
 
 alias foch='ssh mjqzhang@foch.cs.washington.edu'
@@ -107,7 +107,7 @@ scp_to_attu()
 }
 
 # ----------------
-# tmux Aliases
+# tmux aliases
 # ----------------
 
 alias tls='tmux ls'
@@ -134,8 +134,32 @@ tns()
 tks()
 {
   if [[ "${1}" == "" ]]; then
-    echo "Error: no target"
+    echo "error: no target"
   else
     tmux kill-session -t "${1}"
   fi
 }
+
+# ----------------
+# python aliases
+# ----------------
+
+alias py='ipython'
+alias nlp='allennlp'
+
+pym()
+{
+  if [[ "${1}" == "" ]]; then
+    echo "error: no target"
+  else
+    mod=`echo "${1}" | sed "s/\//./g" | sed "s/\.py//g"`
+    # echo "${mod} ${@:2}"
+    python -m ${mod} ${@:2}
+  fi
+}
+
+# ----------------
+# other aliases
+# ----------------
+alias smi='nvidia-smi'
+
