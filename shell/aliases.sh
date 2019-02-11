@@ -60,7 +60,7 @@ alias sublime='open -a Sublime\ Text .'
 # Conda aliases
 # ----------------
 alias csa='source activate'
-alias cda='source deactivate'
+alias cda='conda deactivate'
 alias cls='conda env list'
 
 # ----------------
@@ -144,7 +144,7 @@ tks()
 # python aliases
 # ----------------
 
-alias py='ipython'
+alias ipy='ipython'
 alias nlp='allennlp'
 
 pym()
