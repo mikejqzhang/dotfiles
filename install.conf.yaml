@@ -17,6 +17,7 @@
     ~/.vimrc:
     ~/.zsh:
     ~/.zshrc:
+    ~/.emacs.d:
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]

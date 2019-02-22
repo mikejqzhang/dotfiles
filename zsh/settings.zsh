@@ -19,7 +19,7 @@ SAVEHIST=$HISTSIZE
 setopt appendhistory
 setopt extendedhistory
 setopt incappendhistory
-setopt sharehistory
+# setopt sharehistory
 
 # Time to wait for additional characters in a sequence
 KEYTIMEOUT=10 # corresponds to 100ms
