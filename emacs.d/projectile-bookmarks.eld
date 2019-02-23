@@ -1,0 +1,1 @@
+("~/dotfiles/" "~/Projects/dcg_spigot/" "~/Projects/jot/")

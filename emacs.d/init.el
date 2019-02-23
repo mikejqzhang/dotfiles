@@ -83,6 +83,7 @@
   :ensure t
   :diminish which-key-mode
   :config
+  (setq which-key-idle-delay 0.1)
   (which-key-mode 1))
 
 (use-package general
@@ -203,7 +204,7 @@
   :config
   )
 
-(use-package spaceline-config
+(use-package spaceline-consfig
   :ensure spaceline
   :config
   (setq powerline-default-separator 'wave
@@ -228,6 +229,10 @@
   (add-to-list 'window-persistent-parameters '(window-side . writable))
   (add-to-list 'window-persistent-parameters '(window-slot . writable))
   (eyebrowse-mode t)
+  )
+
+(use-package evil-org
+  :ensure t
   )
 
 (general-create-definer tmux-leader-def
@@ -302,6 +307,7 @@
   "SPC" 'helm-M-x
   "p" (general-key-dispatch 'self-insert-command
 	:timeout 0.5
+        "p" 'helm-projectile
 	"s" 'projectile-switch-project
         "d" 'projectile-dired
         )
@@ -316,12 +322,15 @@
 (general-def
   :keymaps 'magit-status-mode-map
   "<tab>" 'magit-section-cycle
+  "f f" 'magit-fetch-all
   )
 
 (general-def
   "M-x" 'helm-M-x
   "M-h"  help-map
   )
+
+(set-default-font "SF   12" nil t)
 
 (general-def
   :keymaps 'helm-map
