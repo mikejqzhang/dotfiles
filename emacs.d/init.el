@@ -76,12 +76,15 @@
 
 ;; Package configs
 
+(use-package diminish
+  :ensure t)
+
 (use-package dash
   :ensure t)
 
 (use-package which-key
   :ensure t
-  :diminish which-key-mode
+  :diminish
   :config
   (setq which-key-idle-delay 0.1)
   (which-key-mode 1))
@@ -96,6 +99,7 @@
 
 ;; must be setup before evil
 (use-package undo-tree
+  :diminish
   :ensure t)
 
 (use-package evil
@@ -125,6 +129,7 @@
 
 (use-package whitespace
   :ensure nil
+  :diminish
   :config
   (setq whitespace-line-column 80)
   (setq whitespace-style '(lines-tail))
@@ -175,6 +180,12 @@
     (helm-mode))
   )
 
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  )
+
 (use-package projectile
   :ensure t
   :config
@@ -204,7 +215,7 @@
   :config
   )
 
-(use-package spaceline-consfig
+(use-package spaceline-config
   :ensure spaceline
   :config
   (setq powerline-default-separator 'wave
@@ -216,48 +227,39 @@
   (setq powerline-default-separator 'arrow)
   )
 
-;; TODO: Fix the line wrap "%" problem
-(use-package multi-term
-  :ensure t
-  :config
-  (setq multi-term-program "/usr/local/bin/zsh"))
+;; ;; TODO: Fix the line wrap "%" problem
+;; (use-package multi-term
+;;   :ensure t
+;;   :config
+;;   (setq multi-term-program "/usr/local/bin/zsh"))
 
-(use-package eyebrowse
-  :diminish eyebrowse-mode
-  :config
-  (setq eyebrowse-new-workspace t)
-  (add-to-list 'window-persistent-parameters '(window-side . writable))
-  (add-to-list 'window-persistent-parameters '(window-slot . writable))
-  (eyebrowse-mode t)
-  )
+;; (use-package evil-org
+;;   :ensure t
+;;   )
 
-(use-package evil-org
-  :ensure t
-  )
+(diminish 'global-whitespace-mode)
+(diminish 'auto-revert-mode)
+
+
 
 (general-create-definer tmux-leader-def
   :states 'normal
   :keymaps 'override
   :prefix "C-t")
 
+(setq evil-auto-balance-windows nil)
 (tmux-leader-def
-  "u" 'split-window-right
-  "h" 'split-window-below
-  "x" 'delete-window
-  "l" 'eyebrowse-last-window-config
-  "c" 'eyebrowse-create-window-config
-  "k" 'eyebrowse-close-window-config
-  "n" 'eyebrowse-rename-window-config
-  "0" 'eyebrowse-switch-to-window-config-0
-  "1" 'eyebrowse-switch-to-window-config-1
-  "2" 'eyebrowse-switch-to-window-config-2
-  "3" 'eyebrowse-switch-to-window-config-3
-  "4" 'eyebrowse-switch-to-window-config-4
-  "5" 'eyebrowse-switch-to-window-config-5
-  "6" 'eyebrowse-switch-to-window-config-6
-  "7" 'eyebrowse-switch-to-window-config-7
-  "8" 'eyebrowse-switch-to-window-config-8
-  "9" 'eyebrowse-switch-to-window-config-9
+  ;; "u" 'split-window-right
+  ;; "h" 'split-window-below
+  "u" 'evil-window-vsplit
+  "h" 'evil-window-split
+
+  "x" 'evil-window-delete
+
+  "H" 'evil-window-move-far-left
+  "J" 'evil-window-move-very-bottom
+  "K" 'evil-window-move-very-top
+  "L" 'evil-window-move-far-right
   )
 
 (general-nmap
@@ -265,18 +267,13 @@
   "C-h" 'evil-window-left
   "C-j" 'evil-window-down
   "C-k" 'evil-window-up
-  "C-l" 'evil-window-right)
-
-(general-nmap
-  :keymaps 'override
-  "C-p" 'helm-projectile
-  "C-b" 'helm-mini
-  "C-f" 'helm-semantic-or-imenu
+  "C-l" 'evil-window-right
   )
+
 
 (general-create-definer evil-leader-def
   :states 'normal
-  :keymaps 'override
+  ;; :keymaps 'override
   :prefix ",")
 
 (evil-leader-def
@@ -285,17 +282,28 @@
   )
 
 ;; key-chord like behavior for seeing esc
-(general-imap
+(general-def
+  :states '(insert replace)
   "k" (general-key-dispatch 'self-insert-command
-        :timeout 0.05
+        :timeout 0.1
 	"j" 'evil-normal-state)
   "j" (general-key-dispatch 'self-insert-command
-	:timeout 0.05
+	:timeout 0.1
 	"k" 'evil-normal-state))
+
+(general-def
+  :states 'visual
+  "C-c" 'evil-normal-state)
 
 (general-def
   "M-x" 'helm-M-x
   "M-h"  help-map
+  )
+
+(general-nmap
+  :keymaps 'override
+  "C-p" 'helm-projectile
+  "C-b" 'helm-projectile-switch-to-buffer
   )
 
 (general-create-definer space-leader-def
@@ -306,17 +314,32 @@
 (space-leader-def
   "SPC" 'helm-M-x
   "p" (general-key-dispatch 'self-insert-command
-	:timeout 0.5
+        :which-key "projectile"
         "p" 'helm-projectile
+        "f" 'helm-projectile-recentf
+        "b" 'helm-mini
 	"s" 'projectile-switch-project
-        "d" 'projectile-dired
+	"r" 'projectile-invalidate-cache
         )
   "g" (general-key-dispatch 'self-insert-command
-	:timeout 0.5
+        :which-key "git"
         "r" 'magit-refresh-all
 	"s" 'magit-status
         "i" 'magit-gitignore
         )
+  "h" (general-key-dispatch 'self-insert-command
+        :which-key "helm"
+        "d" 'helm-show-kill-ring
+        "r" 'helm-register
+        )
+  "o" (general-key-dispatch 'self-insert-command
+        :which-key "org"
+        "a" 'org-agenda
+        "b" 'org-switchb
+        "c" 'org-capture
+        "l" 'org-store-link
+        )
+  "?" help-map
   )
 
 (general-def
@@ -327,10 +350,10 @@
 
 (general-def
   "M-x" 'helm-M-x
+  "s-x" 'helm-M-x
   "M-h"  help-map
+  "s-h"  help-map
   )
-
-(set-default-font "SF   12" nil t)
 
 (general-def
   :keymaps 'helm-map
@@ -342,3 +365,63 @@
   "C-l"  'helm-next-page
   )
 
+(setq org-special-ctrl-a/e t)
+
+;; allows for newline under headings
+;; (setq org-blank-before-new-entry (quote ((heading) (plain-list-item))))
+(setq org-cycle-separator-lines 1)
+
+(setq org-todo-keywords
+      '((sequence "TODO" "IN-PROGRESS" "WAITING"
+                  "|" "DONE" "CANCELED")))
+
+(setq org-enforce-todo-dependencies t)
+
+(setq org-log-done 'time)
+
+(setq org-hierarchical-todo-statistics nil)
+
+
+(defun clever-insert-item ()
+  "Clever insertion of org item."
+  (if (not (org-in-item-p))
+      (insert "\n")
+    (org-insert-item))
+  )
+
+(defun evil-org-eol-call (fun)
+  "Go to end of line and call provided function.
+FUN function callback"
+  (end-of-line)
+  (funcall fun)
+  (evil-append nil)
+  )
+
+
+(general-nmap
+  :keymaps 'org-mode-map
+  "t" 'org-todo
+  "s-t" '(lambda () (interactive) (evil-org-eol-call (lambda() (org-insert-todo-heading nil))))
+  "-" 'org-cycle-list-bullet
+  "0" 'org-beginning-of-line
+  "$" 'org-end-of-line
+  "o" '(lambda () (interactive) (evil-org-eol-call 'clever-insert-item))
+  "O" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading))
+  "s-o" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading))
+  ">>" 'org-do-demote
+  "<<" 'org-do-promote
+  "s-." 'org-demote-subtree
+  "s-," 'org-promote-subtree
+  "<tab>" 'org-cycle
+  "s-h" 'org-table-move-column-left
+  "s-j" 'org-drag-element-forward
+  "s-k" 'org-drag-element-backward
+  "s-l" 'org-table-move-column-right
+  )
+
+(evil-leader-def
+  :keymaps 'org-mode-map
+  "t"  'org-show-todo-tree
+  "s"  'org-schedule
+  "r" 'org-mode-restart
+  )

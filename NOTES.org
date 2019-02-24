@@ -1,0 +1,31 @@
+#+TITLE: dotfile notes
+
+* emacs config
+** OrgMode [4/6]
+*** DONE get todo workflow to have todo->waiting->done
+    CLOSED: [2019-02-23 Sat 16:06]
+*** DONE get done indicators to use timestamps
+    CLOSED: [2019-02-23 Sat 16:25]
+*** DONE allow blank lines to not be under headings
+    CLOSED: [2019-02-23 Sat 16:25]
+*** DONE get [x/xx] progress indicators on todolist headings
+    CLOSED: [2019-02-23 Sat 16:41]
+*** TODO get org-schedule to be more intuitive
+*** TODO "o" for newline under headding if it's collapsed (not within)
+    
+** Magit [0/2]
+*** TODO get committing/pulling/fetching to be easy 
+*** TODO diff mode?
+    
+
+** Sessions/Windows/Buffer [0/2]
+*** TODO get session saving to work
+*** TODO get multiple window groups working
+
+
+** Python [0/3]
+*** TODO anaconda-mode
+*** TODO pylint
+*** TODO ggtags?
+
+
