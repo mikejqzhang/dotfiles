@@ -8,6 +8,7 @@
 
 ;; set up personal lisp directory
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
 ;; set up themes directory
 (add-to-list 'load-path (expand-file-name "themes" user-emacs-directory))
 

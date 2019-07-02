@@ -1,1 +1,1 @@
-("~/Projects/dcg_spigot/" "~/dotfiles/" "~/dotfiles/zsh/plugins/zsh-syntax-highlighting/" "~/Projects/jot/")
+("~/dotfiles/" "~/dotfiles/zsh/plugins/zsh-syntax-highlighting/")
