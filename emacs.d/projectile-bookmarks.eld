@@ -1,1 +1,1 @@
-("~/dotfiles/" "~/dotfiles/zsh/plugins/zsh-syntax-highlighting/")
+("~/projects/jot/" "~/projects/dotfiles/" "~/projects/OpenNMT-py/" "~/.zsh/" "~/.vim/" "~/.shell/" "~/.emacs.d/" "~/.bash/")

@@ -33,7 +33,7 @@
 (global-hl-line-mode 1) ; highlight current line
 (setq-default indent-tabs-mode nil) ; use spaces instead of tabs
 (fset 'yes-or-no-p 'y-or-n-p)
-(set-face-attribute 'default nil :height 130) ; set font size
+(set-face-attribute 'default nil :height 140) ; set font size
 
 ;; improve scrolling
 (setf scroll-margin 5
@@ -76,7 +76,6 @@
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 
 ;; Package configs
-
 (use-package diminish
   :ensure t)
 
@@ -194,6 +193,7 @@
   (projectile-global-mode)
   (setq projectile-enable-caching t)
   (setq projectile-completion-system 'helm)
+  (setq projectile-project-search-path '("~/projects/"))
   )
 
 (use-package helm-projectile
@@ -279,7 +279,6 @@
 
 (evil-leader-def
   "n" 'neotree-toggle
-  "d" 'projectile-dired
   )
 
 ;; key-chord like behavior for seeing esc
@@ -321,6 +320,7 @@
         "b" 'helm-mini
 	"s" 'projectile-switch-project
 	"r" 'projectile-invalidate-cache
+        "d" 'projectile-dired
         )
   "g" (general-key-dispatch 'self-insert-command
         :which-key "git"
