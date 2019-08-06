@@ -3,7 +3,7 @@
 # ----------------
 
 # Use colors in coreutils utilities output
-alias ls='ls -G'
+alias ls='ls --color=auto'
 alias grep='grep --color'
 
 # ls aliases
@@ -162,4 +162,5 @@ pym()
 # other aliases
 # ----------------
 alias smi='nvidia-smi'
+alias sq='squeue'
 
