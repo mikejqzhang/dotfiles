@@ -1,85 +1,129 @@
-;; Leave this here, or package.el will just add it again.
-(package-initialize)
-
-;; setting up stuff
-(require 'package)
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file t)
-
-;; set up personal lisp directory
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-;; set up themes directory
-(add-to-list 'load-path (expand-file-name "themes" user-emacs-directory))
-
-;; single function call for reloading emacs config in emacs
-(defun reload-init ()
-  "Reload the init file."
-  (interactive)
-  (load-file (expand-file-name "init.el" user-emacs-directory))
-  (spaceline-compile))
-
+;; ======================
 ;; general settings
-(setf inhibit-startup-screen t) ; disable welcome screen
-(setf ring-bell-function 'ignore) ; disable alarm bell
-(setq visible-bell t)
-;; (setq-default bell-inhibit-time 10)
+;; ======================
+
+;;; Startup Optimizations
+(setq gc-cons-threshold-original gc-cons-threshold)
+(setq gc-cons-threshold (* 1024 1024 100))
+(setq file-name-handler-alist-original file-name-handler-alist)
+(setq file-name-handler-alist nil)
+
+(add-hook 'after-init-hook
+          `(lambda ()
+            (setq gc-cons-threshold gc-cons-threshold-original)
+            (setq file-name-handler-alist file-name-handler-alist-original)
+            (makunbound 'gc-cons-threshold-original)
+            (makunbound 'file-name-handler-alist-original)
+            (garbage-collect)) t)
+
+(setq package-enable-at-startup nil)
+(setq load-prefer-newer t) ; don't load outdated byte code
+
+
+;;; Setting up paths
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(setq custom-file "~/.emacs.d/custom.el")
+(condition-case nil
+    (load custom-file)
+  (error (with-temp-file custom-file)))
+
+
+;; -----------------------------------------------------------------------------
+;; General Settings
+;; -----------------------------------------------------------------------------
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-(blink-cursor-mode -1)
 (display-time-mode 1)
-(show-paren-mode 1) ; highlight matching parens
-(global-hl-line-mode 1) ; highlight current line
-(setq indent-tabs-mode nil) ; use spaces instead of tabs
-(fset 'yes-or-no-p 'y-or-n-p)
-(set-face-attribute 'default nil :height 140) ; set font size
+(blink-cursor-mode -1)
+(global-hl-line-mode 1)
+(setq inhibit-startup-screen t)
+
+;; no bells please....
+(setq ring-bell-function 'ignore)
+(setq visible-bell t)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;;; Editing Configs
+(show-paren-mode 1)
+
+;; Highlight and allow to open http link at point in programming buffers
+;; goto-address-prog-mode only highlights links in strings and comments
+(add-hook 'prog-mode-hook 'goto-address-prog-mode)
+;; Highlight and follow bug references in comments and strings
+(add-hook 'prog-mode-hook 'bug-reference-prog-mode)
+
+;; Keep focus while navigating help buffers
+(setq help-window-select 't)
+
+;; Scroll compilation to first error or end
+(setq compilation-scroll-output 'first-error)
+
+;; start scratch in text mode (usefull to get a faster Emacs load time
+;; because it avoids autoloads of elisp modes)
+(setq initial-major-mode 'text-mode)
+
+;; Where to start line-wrapping
+(setq-default fill-column 80)
+
+;; Save clipboard contents into kill-ring before replace them
+(setq save-interprogram-paste-before-kill t)
+
+
+(setq backup-by-copying t)
+(setq version-control t)
+(setq delete-old-versions t)
+(setq kept-new-versions 10)
+
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq vc-make-backup-files t)
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+
+
+;; use only spaces and no tabs
+(setq-default indent-tabs-mode nil
+              tab-width 4)
+
+;; ;; Text
+;; (setq longlines-show-hard-newlines t)
+
 
 ;; improve scrolling
-(setf scroll-margin 5
+(setq scroll-margin 5
       scroll-step 1
       scroll-conservatively 10000
       scroll-up-aggressively 0.01
       scroll-down-aggressively 0.01)
 
-(add-hook 'display-line-numbers-mode-hook
-                   (lambda () (setq display-line-numbers-type 'relative)))
-         (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+; Font
+(set-face-attribute 'default nil :height 140)
 
+; Line Numbers
+(add-hook 'display-line-numbers-mode-hook
+          (lambda () (setq display-line-numbers t)))
 (global-display-line-numbers-mode)
 
-;; sets up package archives
+;; Initialize package.el
+(require 'package)
+(setq package-enable-at-startup nil)
 (setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
-                         ("org"   . "http://orgmode.org/elpa/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")))
+(package-initialize)
 
-
-;; Bootstrap `use-package'
+;; Bootstrap use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'use-package)
-(setq use-package-verbose t)
-(setq use-package-always-ensure t) ;; kinda redundant in currant setup
-
-(use-package auto-compile
-  :config
-  (auto-compile-on-load-mode))
-(setq load-prefer-newer t)
-
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-(setq delete-old-versions -1)
-(setq version-control t)
-(setq vc-make-backup-files t)
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+(eval-when-compile
+  (require 'use-package)
+  (setq use-package-always-ensure t)
+  (setq use-package-verbose t))
 
 ;; Package configs
-(use-package diminish
-  :ensure t)
-
-(use-package dash
-  :ensure t)
+(use-package diminish)
+(use-package dash)
 
 (use-package which-key
   :ensure t
@@ -188,7 +232,7 @@
   :config
   (helm-flx-mode +1)
   (setq helm-flx-for-helm-find-files t ;; t by default
-      helm-flx-for-helm-locate t) ;; nil by default
+        helm-flx-for-helm-locate t) ;; nil by default
   )
 
 
@@ -221,11 +265,11 @@
     "dd" 'neotree-delete-node))
 
 (use-package spacemacs-common
-    :ensure spacemacs-theme
-    :init
-    (setq spacemacs-theme-comment-bg nil)
-    :config
-    (load-theme 'spacemacs-dark t))
+  :ensure spacemacs-theme
+  :init
+  (setq spacemacs-theme-comment-bg nil)
+  :config
+  (load-theme 'spacemacs-dark t))
 
 (use-package org-bullets
   :ensure t
@@ -272,21 +316,21 @@
   :ensure t
   :config
   (global-flycheck-mode)
-  (setq-default flycheck-flake8-maximum-line-length 100)
+  (setq-default flycheck-flake8-maximum-line-length 80)
 
   )
 
-(use-package flyspell-correct
-  :ensure t
-  :config
-  ;; (setq ispell-list-command "--list")
-  )
-
-(use-package flyspell-correct-helm
-  :bind ("C-;" . flyspell-correct-wrapper)
-  :init
-  (setq flyspell-correct-interface #'flyspell-correct-helm)
-  )
+;; (use-package flyspell-correct
+;;   :ensure t
+;;   :config
+;;   ;; (setq ispell-list-command "--list")
+;;   )
+;; 
+;; (use-package flyspell-correct-helm
+;;   :bind ("C-;" . flyspell-correct-wrapper)
+;;   :init
+;;   (setq flyspell-correct-interface #'flyspell-correct-helm)
+;;   )
 
 
 (use-package exec-path-from-shell
@@ -335,13 +379,14 @@
   (setq eyebrowse-slot-format "%s: untitled")
   (setq eyebrowse-tagged-slot-format "%s: %t")
   )
+
 (use-package yaml-mode
   :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
   (add-hook 'yaml-mode-hook
-    '(lambda ()
-       (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+            '(lambda ()
+               (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
   )
 
 (general-create-definer tmux-leader-def
@@ -411,10 +456,10 @@
   :states '(insert replace)
   "k" (general-key-dispatch 'self-insert-command
         :timeout 0.1
-	"j" 'evil-normal-state)
+        "j" 'evil-normal-state)
   "j" (general-key-dispatch 'self-insert-command
-	:timeout 0.1
-	"k" 'evil-normal-state))
+        :timeout 0.1
+        "k" 'evil-normal-state))
 
 (general-def
   :states 'visual
@@ -443,15 +488,15 @@
         "p" 'helm-projectile
         "f" 'helm-projectile-recentf
         "b" 'helm-mini
-	"s" 'projectile-switch-project
-	"r" 'projectile-invalidate-cache
-	"!" 'projectile-run-shell-command-in-root
+        "s" 'projectile-switch-project
+        "r" 'projectile-invalidate-cache
+        "!" 'projectile-run-shell-command-in-root
         "d" 'projectile-dired
         )
   "g" (general-key-dispatch 'self-insert-command
         :which-key "git"
         "r" 'magit-refresh-all
-	"s" 'magit-status
+        "s" 'magit-status
         "i" 'magit-gitignore
         )
   "h" (general-key-dispatch 'self-insert-command
@@ -527,7 +572,6 @@ FUN function callback"
   (evil-append nil)
   )
 
-
 (general-nmap
   :keymaps 'org-mode-map
   "t" 'org-todo
@@ -576,3 +620,12 @@ FUN function callback"
 (modify-syntax-entry ?_ "w")
 ;; (visual-line-mode)
 
+;; Functions
+(defun finder ()
+  "Opens file directory in Finder."
+  (interactive)
+  (let ((file (buffer-file-name)))
+    (if file
+        (shell-command
+         (format "%s %s" (executable-find "open") (file-name-directory file)))
+      (error "Buffer is not attached to any file."))))

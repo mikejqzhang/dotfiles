@@ -1,7 +1,6 @@
 "---------------------
 " essentials
 "---------------------
-
 " not vi compatible
 set nocompatible
 
@@ -76,7 +75,6 @@ augroup END
 "---------------------
 " editing config
 "---------------------
-
 " fight me
 imap jk <esc>
 imap kj <esc>
@@ -103,6 +101,7 @@ nnoremap <leader>v :set paste!<CR>
 nnoremap <leader>ww :%s/\s\+$//g<CR>
 
 "" set clipboard=unnamed " Sets to use system clipboard
+
 
 "---------------------
 " tabs config
@@ -181,11 +180,10 @@ call NERDTreeHighlightFile('ipynb', 'cyan', 'none', 'cyan', '#151515')
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 
-"---- "solarized theme" ----"
-" a e s t h e t i c
+" ====== "solarized theme" ======
+" ===== "a e s t h e t i c" =====
 syntax enable
 set background=dark
-
 
 let g:solarized_bold = 0
 let g:solarized_underline = 0
@@ -195,11 +193,9 @@ let g:solarized_contrast = 'high'
 let g:solarized_termcolors = 16
 colorscheme solarized " This must be set after all solarized things
 
-
 "---------------------
 " Local customizations
 "---------------------
-
 " local customizations in ~/.vimrc_local
 let $LOCALFILE=expand("~/.vimrc_local")
 if filereadable($LOCALFILE)

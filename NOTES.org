@@ -1,31 +1,38 @@
 #+TITLE: dotfile notes
 
-* emacs config
-** OrgMode [4/6]
-*** DONE get todo workflow to have todo->waiting->done
-    CLOSED: [2019-02-23 Sat 16:06]
-*** DONE get done indicators to use timestamps
-    CLOSED: [2019-02-23 Sat 16:25]
-*** DONE allow blank lines to not be under headings
-    CLOSED: [2019-02-23 Sat 16:25]
-*** DONE get [x/xx] progress indicators on todolist headings
-    CLOSED: [2019-02-23 Sat 16:41]
-*** TODO get org-schedule to be more intuitive
-*** TODO "o" for newline under headding if it's collapsed (not within)
-    
-** Magit [0/2]
-*** TODO get committing/pulling/fetching to be easy 
-*** TODO diff mode?
-    
+* Dotfiles
+** TODOs
+*** TODO Evaluate Submodules+Dotbot
+**** Maybe I should just homebrew a script and make it easier. Rely on Vimplug for installation
 
-** Sessions/Windows/Buffer [0/2]
-*** TODO get session saving to work
-*** TODO get multiple window groups working
+* Vim
+** Feature TODOs
+*** TODO Make cursor easier to spot in highlighted text 
+*** TODO Clean out/Learn unused configs
+**** Syntastic
+**** Fugitive
+**** Vim Git
+** Plugins:
+*** Ctrl-P
+*** Lightline
+*** Nerdtree
+*** Syntastic (is this being used?)
+*** Buffergator
+*** Solarized
+*** Fugitive (Not Using this...)
+*** Vim Git
+*** Pathogen
+*** vim-tmux-navigator
+*** vim-tmux (syntax highlighting for tmux.conf)
 
-    
-** Python [0/3]
-*** TODO anaconda-mode
-*** TODO pylint
-*** TODO ggtags?
-
-
+* Emacs
+** TODOs [0/5]
+*** TODO Autoenable SF Mono Font
+*** TODO Make shortcut to toggle relative Line numbers
+*** TODO Switch general keybindings to Hydra
+*** TODO Multiple Cursors
+*** TODO Terminal
+*** TODO Persp-mode
+** Plugins
+*** Powerline
+*** 
