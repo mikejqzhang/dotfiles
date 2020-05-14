@@ -1,39 +1,57 @@
 ;; ======================
-;; general settings
+;; Startup Optimizations
 ;; ======================
+;; --- Record Startup Time  ---
+(setq emacs-start-time (current-time))
 
-;;; Startup Optimizations
-(setq gc-cons-threshold-original gc-cons-threshold)
+;; --- Change Garbage Collection Threshold  ---
 (setq gc-cons-threshold (* 1024 1024 100))
-(setq file-name-handler-alist-original file-name-handler-alist)
-(setq file-name-handler-alist nil)
 
-(add-hook 'after-init-hook
-          `(lambda ()
-            (setq gc-cons-threshold gc-cons-threshold-original)
-            (setq file-name-handler-alist file-name-handler-alist-original)
-            (makunbound 'gc-cons-threshold-original)
-            (makunbound 'file-name-handler-alist-original)
-            (garbage-collect)) t)
+;; --- Disable GUI Elements ---
+;; from http://bzg.fr/emacs-hide-mode-line.html
+(defvar-local hidden-mode-line-mode nil)
+(defvar-local hide-mode-line nil)
+(define-minor-mode hidden-mode-line-mode
+  "Minor mode to hide the mode-line in the current buffer."
+  :init-value nil
+  :global t
+  :variable hidden-mode-line-mode
+  :group 'editing-basics
+  (if hidden-mode-line-mode
+      (setq hide-mode-line mode-line-format
+            mode-line-format nil)
+    (setq mode-line-format hide-mode-line
+          hide-mode-line nil))
+  (force-mode-line-update)
+  ;; Apparently force-mode-line-update is not always enough to
+  ;; redisplay the mode-line
+  (redraw-display)
+  (when (and (called-interactively-p 'interactive)
+             hidden-mode-line-mode)
+    (run-with-idle-timer
+     0 nil 'message
+     (concat "Hidden Mode Line Mode enabled.  "
+             "Use M-x hidden-mode-line-mode to make the mode-line appear."))))
 
-(setq package-enable-at-startup nil)
-(setq load-prefer-newer t) ; don't load outdated byte code
+(hidden-mode-line-mode)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(tooltip-mode -1)
+(scroll-bar-mode -1)
 
-
-;;; Setting up paths
+;; ======================
+;; Path Setup
+;; ======================
+;; --- Move cutsom file ---
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (setq custom-file "~/.emacs.d/custom.el")
 (condition-case nil
     (load custom-file)
   (error (with-temp-file custom-file)))
 
-
 ;; -----------------------------------------------------------------------------
 ;; General Settings
 ;; -----------------------------------------------------------------------------
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
 (display-time-mode 1)
 (blink-cursor-mode -1)
 (global-hl-line-mode 1)
@@ -65,7 +83,7 @@
 (setq initial-major-mode 'text-mode)
 
 ;; Where to start line-wrapping
-(setq-default fill-column 80)
+(setq-default fill-column 100)
 
 ;; Save clipboard contents into kill-ring before replace them
 (setq save-interprogram-paste-before-kill t)
@@ -164,18 +182,15 @@
   :config
   (evil-collection-init))
 
-(use-package all-the-icons
-  :ensure t)
+(use-package all-the-icons)
 
-(use-package all-the-icons-dired
-  :ensure t)
-
+(use-package all-the-icons-dired)
 
 (use-package whitespace
   :ensure nil
   :diminish
   :config
-  (setq whitespace-line-column 80)
+  (setq whitespace-line-column 100)
   (setq whitespace-style '(lines-tail))
   (add-hook 'prog-mode-hook 'whitespace-mode)
   (global-whitespace-mode 1)
@@ -316,7 +331,7 @@
   :ensure t
   :config
   (global-flycheck-mode)
-  (setq-default flycheck-flake8-maximum-line-length 80)
+  (setq-default flycheck-flake8-maximum-line-length 100)
 
   )
 
@@ -349,12 +364,13 @@
 ;;   :ensure t
 ;;   )
 
+;; (require 'column-marker)
+;; (add-hook 'python-mode-hook (lambda () (interactive) (column-marker-1 100)))
+
 ;; (use-package column-marker
 ;;   :ensure n
-;;   :load-path "lisp/column-marker.el"
 ;;   :config
-;;     (add-hook 'python-mode-hook (lambda () (interactive) (column-marker-1 80)))
-;;     )
+;;   (add-hook 'python-mode-hook (lambda () (interactive) (column-marker-1 100))))
 
 (diminish 'global-whitespace-mode)
 (diminish 'auto-revert-mode)
@@ -629,3 +645,6 @@ FUN function callback"
         (shell-command
          (format "%s %s" (executable-find "open") (file-name-directory file)))
       (error "Buffer is not attached to any file."))))
+
+;; (unless (frame-parameter nil 'fullscreen)
+;;   (toggle-frame-maximized))

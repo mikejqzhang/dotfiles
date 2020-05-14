@@ -14,7 +14,7 @@
  '(eyebrowse-tagged-slot-format "%s: %t")
  '(package-selected-packages
    (quote
-    (yaml-mode multiple-cursors exec-path-from-shell flyspell-correct-helm flyspell-correct flycheck company-jedi company helm-flx powerline org-bullets diminish evil-org eyebrowse magit multi-term helm-projectile projectile spaceline-all-the-icons spaceline spacemacs dash spacemacs-theme evil-collection neotree neo-tree helm dired all-the-icons-dired all-the-icons auto-compile key-chord evil undo-tree which-key use-package general))))
+    (n column-marker yaml-mode multiple-cursors exec-path-from-shell flyspell-correct-helm flyspell-correct flycheck company-jedi company helm-flx powerline org-bullets diminish evil-org eyebrowse magit multi-term helm-projectile projectile spaceline-all-the-icons spaceline spacemacs dash spacemacs-theme evil-collection neotree neo-tree helm dired all-the-icons-dired all-the-icons auto-compile key-chord evil undo-tree which-key use-package general))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
