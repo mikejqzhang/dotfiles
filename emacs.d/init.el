@@ -61,7 +61,15 @@
 (prefer-coding-system 'utf-8)
 
 ; --- Font ---
-(set-face-attribute 'default nil :height 140)
+(set-face-attribute 'default nil :height 130)
+(defun mjq-set-font (&optional frame)
+  (when frame
+    (select-frame frame))
+  (condition-case nil
+    (set-frame-font "SF Mono")
+    (error nil)))
+(mjq-set-font)
+(add-hook 'after-frame-make-functions 'mjq-set-font)
 
 ; --- Line Numbers ---
 (add-hook 'display-line-numbers-mode-hook
@@ -161,7 +169,7 @@
         "Welcome to the church of Emacs"
         "While any text editor can save your files, only Emacs can save your soul"
         "I showed you my source code, pls respond"))
-  ;; (setq dashboard-set-navigator t)
+  ;; (setq dashboard-set-navigator t) ;; Use this if I ever want to setup links
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-show-shortcuts t)
   (setq dashboard-set-file-icons t)
