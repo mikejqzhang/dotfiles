@@ -27,7 +27,7 @@ set scrolloff=5 " buffer 5 lines from top & bottom (when possible)
 set showcmd " show current command
 set noshowmode
 set showmatch " show matching highlighted parens
-set colorcolumn=101 " show line character limit
+set colorcolumn=81 " show line character limit
 
 set lazyredraw " skip redrawing screen in some cases
 set history=10000 " more history

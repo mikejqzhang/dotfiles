@@ -1,13 +1,20 @@
 ;; ======================
-;; Startup Optimizations
+;; Path Setup
 ;; ======================
-;; --- Record Startup Time  ---
-(setq emacs-start-time (current-time))
+;; --- Move cutsom file ---
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(setq custom-file "~/.emacs.d/custom.el")
+(condition-case nil
+    (load custom-file)
+  (error (with-temp-file custom-file)))
 
-;; --- Change Garbage Collection Threshold  ---
+;; ======================
+;; General Settings
+;; ======================
+;; --- Startup Optimization  ---
 (setq gc-cons-threshold (* 1024 1024 100))
 
-;; --- Disable GUI Elements ---
+;; --- Disable GUI Elements (Also Helps With Startup) ---
 ;; from http://bzg.fr/emacs-hide-mode-line.html
 (defvar-local hidden-mode-line-mode nil)
 (defvar-local hide-mode-line nil)
@@ -38,61 +45,72 @@
 (menu-bar-mode -1)
 (tooltip-mode -1)
 (scroll-bar-mode -1)
-
-;; ======================
-;; Path Setup
-;; ======================
-;; --- Move cutsom file ---
-(setq custom-file (locate-user-emacs-file "custom.el"))
-(setq custom-file "~/.emacs.d/custom.el")
-(condition-case nil
-    (load custom-file)
-  (error (with-temp-file custom-file)))
-
-;; -----------------------------------------------------------------------------
-;; General Settings
-;; -----------------------------------------------------------------------------
 (display-time-mode 1)
+
+;; --- Startup Screen ---
+(setq inhibit-startup-screen t)
+;; TODO: Figure out what I want to do with this
+;; (setq initial-scratch-message "--- Welcome Back! ---\n\n")
+(setq initial-major-mode 'text-mode)  ;; should also help with load times
+
+;; --- Editor Config ---
 (blink-cursor-mode -1)
 (global-hl-line-mode 1)
-(setq inhibit-startup-screen t)
+(setq truncate-lines t)  ;; no line wrapping
+(show-paren-mode 1)
+(prefer-coding-system 'utf-8)
 
-;; no bells please....
+; --- Font ---
+(set-face-attribute 'default nil :height 140)
+
+; --- Line Numbers ---
+(add-hook 'display-line-numbers-mode-hook
+          (lambda () (setq display-line-numbers t)))
+(global-display-line-numbers-mode)
+
+;; --- No Bells Please ---
 (setq ring-bell-function 'ignore)
 (setq visible-bell t)
 
+;; --- Editor Interation Behavior ---
 (defalias 'yes-or-no-p 'y-or-n-p)
+;; (setq kill-buffer-query-functions nil)  ;; Removes any question about killing buffers
 
-;;; Editing Configs
-(show-paren-mode 1)
+;; --- Buffer Navigation & Scrolling ---
+;; (setq next-screen-context-lines 5)
+;; (setq recenter-positions '(top middle bottom))
+(setq scroll-margin 5)
+(setq scroll-step 1)
+(setq scroll-conservatively 10000)
+(setq scroll-up-aggressively 0.01)
+(setq scroll-down-aggressively 0.01)
 
+
+;; --- Link Navigation
 ;; Highlight and allow to open http link at point in programming buffers
 ;; goto-address-prog-mode only highlights links in strings and comments
-(add-hook 'prog-mode-hook 'goto-address-prog-mode)
+;; (add-hook 'prog-mode-hook 'goto-address-prog-mode)
 ;; Highlight and follow bug references in comments and strings
-(add-hook 'prog-mode-hook 'bug-reference-prog-mode)
+;; (add-hook 'prog-mode-hook 'bug-reference-prog-mode)
 
 ;; Keep focus while navigating help buffers
-(setq help-window-select 't)
+;; (setq help-window-select 't)
 
 ;; Scroll compilation to first error or end
-(setq compilation-scroll-output 'first-error)
-
-;; start scratch in text mode (usefull to get a faster Emacs load time
-;; because it avoids autoloads of elisp modes)
-(setq initial-major-mode 'text-mode)
+;; (setq compilation-scroll-output 'first-error)
 
 ;; Where to start line-wrapping
-(setq-default fill-column 100)
+;; (setq-default fill-column 80)
 
 ;; Save clipboard contents into kill-ring before replace them
-(setq save-interprogram-paste-before-kill t)
+;; (setq save-interprogram-paste-before-kill t)
 
-
+;; --- Backups ---
 (setq backup-by-copying t)
-(setq version-control t)
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq delete-old-versions t)
-(setq kept-new-versions 10)
+(setq version-control t)
+;; (setq create-lockfiles nil)
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq vc-make-backup-files t)
@@ -100,75 +118,78 @@
 
 
 ;; use only spaces and no tabs
-(setq-default indent-tabs-mode nil
-              tab-width 4)
-
-;; ;; Text
-;; (setq longlines-show-hard-newlines t)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 
 
-;; improve scrolling
-(setq scroll-margin 5
-      scroll-step 1
-      scroll-conservatively 10000
-      scroll-up-aggressively 0.01
-      scroll-down-aggressively 0.01)
-
-; Font
-(set-face-attribute 'default nil :height 140)
-
-; Line Numbers
-(add-hook 'display-line-numbers-mode-hook
-          (lambda () (setq display-line-numbers t)))
-(global-display-line-numbers-mode)
-
+;; ======================
+;; Bootstrap
+;; ======================
 ;; Initialize package.el
 (require 'package)
 (setq package-enable-at-startup nil)
 (setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
-
-;; Bootstrap use-package
+;; Boostrp use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-
 (eval-when-compile
   (require 'use-package)
   (setq use-package-always-ensure t)
   (setq use-package-verbose t))
 
 ;; Package configs
-(use-package diminish)
 (use-package dash)
+(use-package diminish)
+;; TODO: Bootstrap all-the-icons to run (all-the-icons-install-fonts)
+(use-package all-the-icons)
+(use-package page-break-lines :diminish)  ;; required for dashboard
+(use-package dashboard
+  :after page-break-lines
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-banner-logo-title
+        "[ Research is formalized curiosity - Zora Neale Hurston ]")
+  (setq dashboard-footer-messages
+        '("The one true editor, Emacs!"
+        "Who the hell uses VIM anyway? Go Evil!"
+        "Free as free speech, free as free Beer"
+        "Happy coding!"
+        "Vi Vi Vi, the editor of the beast"
+        "Welcome to the church of Emacs"
+        "While any text editor can save your files, only Emacs can save your soul"
+        "I showed you my source code, pls respond"))
+  ;; (setq dashboard-set-navigator t)
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-show-shortcuts t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-items '((projects . 8)
+                          (bookmarks . 8))))
 
 (use-package which-key
-  :ensure t
   :diminish
   :config
   (which-key-mode 1)
-  (setq which-key-idle-delay 0.1)
-  )
+  (setq which-key-idle-delay 0.1))
 
 (use-package general
-  :ensure t
   :after which-key
   :config
   (general-evil-setup)
-  (general-auto-unbind-keys)
-  )
+  (general-auto-unbind-keys))
 
-;; must be setup before evil
+
 (use-package undo-tree
-  :diminish
-  :ensure t)
+  :diminish)
 
 (use-package evil
-  :ensure t
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
+  :after undo-tree
   :config
   (evil-mode 1)
   (setq evil-emacs-state-modes nil)
@@ -182,15 +203,13 @@
   :config
   (evil-collection-init))
 
-(use-package all-the-icons)
-
 (use-package all-the-icons-dired)
 
 (use-package whitespace
   :ensure nil
   :diminish
   :config
-  (setq whitespace-line-column 100)
+  (setq whitespace-line-column 80)
   (setq whitespace-style '(lines-tail))
   (add-hook 'prog-mode-hook 'whitespace-mode)
   (global-whitespace-mode 1)
@@ -225,12 +244,12 @@
   )
 
 (use-package projectile
-  :ensure t
+  :diminish
   :config
   (projectile-mode 1)
   ;; (setq projectile-enable-caching t)
   (setq projectile-completion-system 'helm)
-  (setq projectile-project-search-path '("~/projects/"))
+  (setq projectile-project-search-path '("~/Projects/"))
   (setq projectile-indexing-method 'hybrid)
   )
 
@@ -287,27 +306,40 @@
   (load-theme 'spacemacs-dark t))
 
 (use-package org-bullets
-  :ensure t
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   )
 
-(use-package powerline
-  :ensure t
+;; --- Mode Line ---
+(use-package spaceline
+  :init
+  (require 'spaceline-config)
+  (setq powerline-default-separator 'wave)
   :config
-  )
-
-(use-package spaceline-config
-  :ensure spaceline
-  :config
-  (setq powerline-default-separator 'wave
-        spaceline-workspace-numbers-unicode t
-        spaceline-window-numbers-unicode t)
   (spaceline-spacemacs-theme)
-  (spaceline-helm-mode)
-  (spaceline-info-mode)
-  (setq powerline-default-separator 'arrow)
   )
+;; Broken? Use when it works...
+;; (use-package spaceline-all-the-icons 
+;;   :after spaceline
+;;   :config
+;;   )
+
+
+;; (use-package spaceline-config
+;;   :init
+;;   ;; (setq powerline-default-separator 'wave)
+;;   ;; ;;       spaceline-workspace-numbers-unicode t
+;;   ;; ;;       spaceline-window-numbers-unicode t)
+;;   ;; ;; (spaceline-helm-mode)
+;;   ;; ;; (spaceline-info-mode)
+;;   (require 'spaceline)
+;;   ;; (spaceline-compile)
+;;   :config
+;;   (spaceline-spacemacs-theme)
+;;   )
+;; (use-package spaceline-all-the-icons
+;;   :after spaceline
+;;   :config (spaceline-all-the-icons-theme))
 
 (use-package company
   :ensure t
@@ -331,7 +363,7 @@
   :ensure t
   :config
   (global-flycheck-mode)
-  (setq-default flycheck-flake8-maximum-line-length 100)
+  (setq-default flycheck-flake8-maximum-line-length 80)
 
   )
 
@@ -558,7 +590,7 @@
 
 ;; allows for newline under headings
 ;; (setq org-blank-before-new-entry (quote ((heading) (plain-list-item))))
-(setq org-cycle-separator-lines 1)
+;; (setq org-cycle-separator-lines 1)
 
 (setq org-todo-keywords
       '((sequence "TODO" "IN-PROGRESS" "WAITING"
@@ -646,5 +678,6 @@ FUN function callback"
          (format "%s %s" (executable-find "open") (file-name-directory file)))
       (error "Buffer is not attached to any file."))))
 
-;; (unless (frame-parameter nil 'fullscreen)
-;;   (toggle-frame-maximized))
+(unless (frame-parameter nil 'fullscreen)
+  (toggle-frame-maximized))
+
