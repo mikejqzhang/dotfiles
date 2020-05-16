@@ -195,23 +195,34 @@
 
 (use-package evil
   :init
-  (setq evil-want-integration t)
+  ;; both are required for evil-collection
+  (setq evil-want-integration t)  
   (setq evil-want-keybinding nil)
   :after undo-tree
   :config
-  (evil-mode 1)
+  ;; TODO: Decide whether or not I want this behavior
+  ;; Disables entering emacs state when opening certain modes
   (setq evil-emacs-state-modes nil)
-  (setq evil-insert-state-modes nil)
-  (setq evil-motion-state-modes nil)
-  )
+  (evil-mode 1))
 
 (use-package evil-collection
   :after evil
-  :ensure t
   :config
   (evil-collection-init))
 
-(use-package all-the-icons-dired)
+(use-package evil-surround
+  :config
+  (global-evil-surround-mode 1))
+
+
+(use-package magit)
+(use-package evil-magit
+  :after (evil magit)
+  ;; TODO: See github page about setting this
+  ;; :init
+  ;; (setq evil-magit-use-y-for-yank nil)
+  )
+
 
 (use-package whitespace
   :ensure nil
@@ -226,14 +237,9 @@
 (use-package dired
   :ensure nil
   :config
-  (add-hook 'dired-load-hook
-            (function (lambda () (load "dired-x"))))
-  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-  )
-
-(use-package magit
-  :ensure t
-  )
+  (add-hook 'dired-load-hook (lambda () (load "dired-x")))
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+(use-package all-the-icons-dired)
 
 (use-package helm
   :ensure t
