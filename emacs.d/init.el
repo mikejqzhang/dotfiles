@@ -172,22 +172,28 @@
   (setq use-package-always-ensure t)
   (setq use-package-verbose t))
 
-
 ;; ======================
 ;; Packages
 ;; ======================
-;; --- General Utilities ---
+;; --- General Packages ---
+;; string maniuplation
+(use-package s)
+;; files
+(use-package f)
+;; list api
 (use-package dash)
-
+;; hide minor modes
 (use-package diminish)
-
 ;; TODO: Bootstrap all-the-icons to run (all-the-icons-install-fonts)
+;; pretty icons everywhere
 (use-package all-the-icons)
-
 ;; --- Dashboard ---
+
+;; --- Startup Packages ---
+;; TODO: Can I use this in org?
+;; I think this makes dashed lines across a buffer
 (use-package page-break-lines
   :diminish)  ;; required for dashboard
-
 (use-package dashboard
   :after page-break-lines
   :config
@@ -211,39 +217,18 @@
   (setq dashboard-items '((projects . 8)
                           (bookmarks . 8))))
 
-;; --- TODO ---
-(use-package which-key
-  :diminish
-  :config
-  (which-key-mode 1)
-  (setq which-key-idle-delay 0.1))
-;; (use-package general
-;;   :after which-key
-;;   :config
-;;   (general-evil-setup)
-;;   (general-auto-unbind-keys))
-
-(use-package whitespace
-  :ensure nil
-  :diminish
-  :config
-  (setq whitespace-line-column 80)
-  (setq whitespace-style '(lines-tail))
-  (add-hook 'prog-mode-hook 'whitespace-mode)
-  (global-whitespace-mode 1)
-  )
-
 ;; --- Evil ---
 (use-package undo-tree
   :diminish)
 
+;; evil soft dependency
 ;; For the motions g; g, and for the last-change-register .
 (use-package goto-chg)
 
 (use-package evil
   :init
   ;; both are required for evil-collection
-  (setq evil-want-integration t)  
+  (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   :after (undo-tree goto-chg)
   :config
@@ -282,6 +267,12 @@
 (use-package all-the-icons-dired)
 
 ;; --- Keybindings ---
+(use-package which-key
+  :diminish
+  :config
+  (which-key-mode 1)
+  (setq which-key-idle-delay 0.1))
+
 (use-package hydra)
 
 ;; Only used for jk esc keybinding
@@ -290,7 +281,7 @@
   (setq key-chord-two-keys-delay 0.1)
   (key-chord-mode 1))
 
-;; --- Ivy ---
+;; --- Ivy/Counsel ---
 (use-package ivy
   :diminish
   :config
@@ -302,7 +293,7 @@
   (ivy-mode 1)
   )
 
-(use-package ivy-hydra)
+;; (use-package ivy-hydra)
 
 (use-package swiper
   :after ivy
@@ -316,23 +307,6 @@
   (counsel-mode)
   )
 
-;; (use-package helm)
-;; (use-package helm
-;;   :ensure t
-;;   :diminish helm-mode
-;;   :init
-;;   (progn
-;;     (require 'helm-config)
-;;     (setq helm-candidate-number-limit 100)
-;;     (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-;;           helm-input-idle-delay 0.01  ; this actually updates things reeeelatively quickly.
-;;           helm-yas-display-key-on-candidate t
-;;           helm-quick-update t
-;;           helm-M-x-requires-pattern nil
-;;           helm-ff-skip-boring-files t)
-;;     (helm-mode))
-;;   )
-
 
 (use-package projectile
   :diminish
@@ -343,23 +317,6 @@
   (setq projectile-project-search-path '("~/Projects/"))
   (setq projectile-indexing-method 'hybrid)
   )
-
-;; (use-package helm-projectile
-;;   :ensure t
-;;   :config
-;;   (helm-projectile-on)
-;;   (setq helm-buffers-fuzzy-matching t
-;;         helm-recentf-fuzzy-match    t)
-;;   )
-
-;; (use-package helm-flx
-;;   :ensure t
-;;   :config
-;;   (helm-flx-mode +1)
-;;   (setq helm-flx-for-helm-find-files t ;; t by default
-;;         helm-flx-for-helm-locate t) ;; nil by default
-;;   )
-
 
 (use-package neotree
   :ensure t
@@ -378,17 +335,6 @@
                 (neotree-find file-name)))
         (message "Could not find git project root."))))
   (setq neo-smart-open t))
-
-  ;; :general
-  ;; (general-def 'normal neotree-mode-map
-  ;;   "<RET>" 'neotree-enter
-  ;;   "ll" 'neotree-hidden-file-toggle
-  ;;   "f" 'neotree-stretch-toggle
-  ;;   "U" 'neotree-select-up-node
-  ;;   "R" 'neotree-refresh
-  ;;   ">" 'neotree-change-root
-  ;;   "c" 'neotree-create-node
-  ;;   "dd" 'neotree-delete-node))
 
 (use-package spacemacs-common
   :ensure spacemacs-theme
@@ -409,105 +355,36 @@
   (setq powerline-default-separator 'wave)
   :config
   (spaceline-spacemacs-theme)
-  ()
   )
-
 
 (use-package flycheck
   :diminish
   :config
+  (setq flycheck-python-pylint-executable "pylint")
   (global-flycheck-mode))
 
 (use-package yaml-mode
-  :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 
-;; Broken? Use when it works...
-;; (use-package spaceline-all-the-icons 
-;;   :after spaceline
-;;   :config
-;;   )
+(use-package anaconda-mode
+  :config
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
+
+(use-package company-anaconda
+  :after anaconda-mode)
+
+(use-package company
+  :config
+  (add-hook 'after-init-hook 'global-company-mode)
+  (setq company-backends
+    '(company-files
+      company-keywords
+      company-capf
+      )))
 
 
-;; (use-package company
-;;   :ensure t
-;;   :config
-;;   (add-hook 'after-init-hook 'global-company-mode)
-;;   )
-
-;; (use-package company-jedi
-;;   :config
-;;   (setq jedi:environment-virtualenv
-;;         (list (expand-file-name "~/.emacs.d/python-environments/")))
-;;   (add-hook 'python-mode-hook 'jedi:setup)
-;;   (setq jedi:complete-on-dot t)
-;;   (setq jedi:use-shortcuts t)
-;;   (defun config/enable-company-jedi ()
-;;     (add-to-list 'company-backends 'company-jedi))
-;;   (add-hook 'python-mode-hook 'config/enable-company-jedi)
-;;   )
-
-
-;; (use-package flyspell-correct
-;;   :ensure t
-;;   :config
-;;   ;; (setq ispell-list-command "--list")
-;;   )
-;; 
-;; (use-package flyspell-correct-helm
-;;   :bind ("C-;" . flyspell-correct-wrapper)
-;;   :init
-;;   (setq flyspell-correct-interface #'flyspell-correct-helm)
-;;   )
-
-
-;;(use-package exec-path-from-shell
-;;  :ensure t
-;;  :config
-;;  (exec-path-from-shell-initialize)
-;;  )
-;;
-;;;; TODO: Fix the line wrap "%" problem
-;;(use-package multi-term
-;;  :ensure t
-;;  :config
-;;  (setq multi-term-program "/usr/local/bin/zsh"))
-
-;; (use-package evil-org
-;;   :ensure t
-;;   )
-
-;; (require 'column-marker)
-;; (add-hook 'python-mode-hook (lambda () (interactive) (column-marker-1 100)))
-
-;; (use-package column-marker
-;;   :ensure n
-;;   :config
-;;   (add-hook 'python-mode-hook (lambda () (interactive) (column-marker-1 100))))
-
-;; (diminish 'global-whitespace-mode)
-;; (diminish 'auto-revert-mode)
-;; (use-package multiple-cursors
-;;   :ensure t
-;;   :config
-;;   (global-set-key (kbd "s-d") 'mc/mark-next-like-this)
-;;   (global-set-key (kbd "s-D") 'mc/mark-previous-like-this)
-;;   (global-set-key (kbd "s-G") 'mc/mark-all-like-this)
-;;   )
-;; (use-package eyebrowse
-;;   :diminish
-;;   :config
-;;   (eyebrowse-mode t)
-;;   (setq eyebrowse-new-workspace t)
-;;   (setq eyebrowse-close-window-config-prompt t)
-;;   (setq eyebrowse-keymap-prefix "")
-;;   (setq eyebrowse-mode nil)
-;;   (setq eyebrowse-mode-line-style (quote always))
-;;   (setq eyebrowse-slot-format "%s: untitled")
-;;   (setq eyebrowse-tagged-slot-format "%s: %t")
-;;   )
-;;(use-package iedit)
 
 ;; ======================
 ;; Keybindings
@@ -569,17 +446,17 @@
   (kbd "C-p") 'projectile-find-file)
 (evil-define-key 
   '(normal insert visual replace operator motion) 'global
-  (kbd "C-b") 'projectile-find-file)
+  (kbd "C-b") 'projectile-display-buffer)
 
 (defhydra hydra-projectile (:color blue
                             :idle 0.5)
   ("s" projectile-switch-project)
   ("d" projectile-dired)
-  ("r" projectile-invalidate-cache))
+  ("r" projectile-invalidate-cache)
+  ("b" projectile-ibuffer)
+  )
 
 (define-key projectile-mode-map (kbd "C-r") 'projectile-invalidate-cache)
-
-;; 
 
 ;; Functions
 (defun finder ()
