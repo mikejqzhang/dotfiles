@@ -412,14 +412,21 @@
                         (persp-add-buffer    . nil)
                         (persp-switch        . nil)
                         (persp-window-switch . nil)
-                        (persp-frame-switch  . nil))))))
-  )
+                        (persp-frame-switch  . nil)))))))
 
+;; ======================
+;; Terminal Stuff (Not using, maybe someday...)
+;; ======================
+;; (use-package exec-path-from-shell
+;;   :config
+;;   (when (memq window-system '(mac ns x))
+;;     (exec-path-from-shell-initialize)))
+;; (use-package vterm)
+;; (use-package multi-term)
 
 ;; ======================
 ;; Keybindings
 ;; ======================
-
 ;; --- High Precedence Personal Keymap ---
 ;; General use intercept map.
 ;; For use with evil-define-key to define which evil states to override
@@ -435,7 +442,7 @@
 (mjq-intercept-mode)
 
 ;; Unfortunate, but this must be done for "jk" esc keybinding
-;; key-chord doesn't play nice with evil-define-key :( 
+;; key-chord doesn't play nice with evil-define-key :(
 (defvar mjq-intercept-esc-mode-map (make-sparse-keymap)
   "High precedence personal keymap.")
 (define-minor-mode mjq-intercept-esc-mode
@@ -451,7 +458,7 @@
 (evil-define-key
   'visual 'global
   (kbd "C-c") 'evil-normal-state)
-;; (evil-define-key 
+;; (evil-define-key
 ;;   '(normal insert visual replace operator motion) 'global
 ;;   (kbd "s-x") 'counsel-M-x)
 
@@ -482,10 +489,11 @@
   (kbd "C-t") 'hydra-window-manager/body)
 
 ;; --- Project/Buffer Navigation ---
-(evil-define-key 
+(evil-define-key
   '(normal insert visual replace operator motion) 'mjq-intercept-mode-map
   (kbd "C-p") 'projectile-find-file)
-(evil-define-key 
+
+(evil-define-key
   '(normal insert visual replace operator motion) 'mjq-intercept-mode-map
   (kbd "C-b") 'projectile-display-buffer)
 
@@ -537,6 +545,7 @@
                              :idle 0.5
                              :hint nil)
   ("n" neotree-toggle))
+
 (evil-define-key
   '(normal visual operator motion) 'mjq-intercept-mode-map
   (kbd ",") 'hydra-evil-leader/body)
