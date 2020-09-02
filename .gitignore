@@ -1,1 +1,9 @@
-/emacs.d/elpa
+# Common pattern of ignoring everying in a dir (*), then overriding (!)
+/emacs.d/*
+!/emacs.d/lisp
+!/emacs.d/init.el
+
+# Things here should all be tracked by submodules
+/shell/plugins
+/zsh/plugins
+/vim

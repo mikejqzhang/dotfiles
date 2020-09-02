@@ -1,11 +1,12 @@
 ;; ======================
+  (setq projectile-project-search-path '("~/Projects/"))
 ;; Path Setup
 ;; ======================
 ;; --- Relevent Dirs ---
 (defvar emacs-d
   (file-name-directory
     (file-chase-links load-file-name))
-  "Where the Wild Things Are...")
+  "Where the wild things are...")
 (defvar lisp-d
   (expand-file-name "lisp" emacs-d)
   "Personal elisp files loaded by init.el")
@@ -164,6 +165,7 @@
 (setq package-enable-at-startup nil)
 (setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")))
+(package-refresh-contents)
 (package-initialize)
 
 ;; Boostrp use-package
@@ -212,7 +214,7 @@
           "Welcome to the church of Emacs"
           "While any text editor can save your files, only Emacs can save your soul"
           "I showed you my source code, pls respond"))
-  (setq dashboard-set-navigator t) ;; Use this if I ever want to setup links
+  ;; (setq dashboard-set-navigator t) ;; Use this if I ever want to setup links
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-show-shortcuts t)
   (setq dashboard-set-file-icons t)
@@ -285,42 +287,68 @@
   (key-chord-mode 1))
 
 ;; --- Ivy/Counsel ---
-(use-package ivy
-  :diminish
-  :config
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "[%d / %d] ")
-  (setq ivy-height 15)
-  (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
-  (setq ivy-initial-inputs-alist nil)
-  (ivy-mode 1)
-  )
+;; (use-package ivy
+;;   :diminish
+;;   :config
+;;   (setq ivy-use-virtual-buffers t)
+;;   (setq ivy-count-format "[%d / %d] ")
+;;   (setq ivy-height 15)
+;;   (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+;;   (setq ivy-initial-inputs-alist nil)
+;;   (ivy-mode 1)
+;;   )
+;; 
+;; ;; TODO: Look into these?
+;; ;; (use-package ivy-hydra)
+;; 
+;; (use-package swiper
+;;   :after ivy
+;;   :config
+;;   )
+;; 
+;; (use-package counsel
+;;   :diminish
+;;   :after swiper
+;;   :config
+;;   (counsel-mode)
+;;   )
 
-;; TODO: Look into these?
-;; (use-package ivy-hydra)
 
-(use-package swiper
-  :after ivy
+(use-package helm
+  :ensure t
+  :diminish helm-mode
   :config
-  )
-
-(use-package counsel
-  :diminish
-  :after swiper
-  :config
-  (counsel-mode)
+  (progn
+    (require 'helm-config)
+    (setq helm-candidate-number-limit 100)
+    ;; (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+    ;;       helm-input-idle-delay 0.01  ; this actually updates things reeeelatively quickly.
+    ;;       helm-yas-display-key-on-candidate t
+    ;;       helm-quick-update t
+    ;;       helm-M-x-requires-pattern nil
+    ;;       helm-ff-skip-boring-files t)
+    (helm-mode))
   )
 
 
 (use-package projectile
   :diminish
   :config
-  (setq projectile-enable-caching t)
+  ;; (setq projectile-enable-caching t)  ;; Comment to disable caching
   (setq projectile-cache-file (expand-file-name "projectile.cache" var-d))
-  (setq projectile-completion-system 'ivy)
+  ;; (setq projectile-completion-system 'ivy)
+  (setq projectile-completion-system 'helm)
   (setq projectile-project-search-path '("~/Projects/"))
   (setq projectile-indexing-method 'hybrid)
   (projectile-mode 1)
+  )
+
+(use-package helm-projectile
+  :ensure t
+  :config
+  (helm-projectile-on)
+  (setq helm-buffers-fuzzy-matching t
+        helm-recentf-fuzzy-match    t)
   )
 
 (use-package neotree
@@ -352,6 +380,19 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   )
+
+;; See link for keybindings:
+;; https://github.com/edwtjo/evil-org-mode
+(use-package evil-org
+  :ensure t
+  :after org
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda ()
+              (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 ;; --- Mode Line ---
 (use-package spaceline
@@ -389,30 +430,30 @@
       company-capf
       )))
 
-(use-package persp-mode
-  :config
-  (with-eval-after-load "persp-mode-autoloads"
-      ;; (setq wg-morph-on nil) ;; switch off animation
-      (setq persp-autokill-buffer-on-remove 'kill-weak)
-      (add-hook 'after-init-hook #'(lambda () (persp-mode 1))))
-  (with-eval-after-load "persp-mode"
-    (with-eval-after-load "ivy"
-        (add-hook 'ivy-ignore-buffers
-                #'(lambda (b)
-                    (when persp-mode
-                        (let ((persp (get-current-persp)))
-                        (if persp
-                            (not (persp-contain-buffer-p b persp))
-                            nil)))))
-
-        (setq ivy-sort-functions-alist
-            (append ivy-sort-functions-alist
-                    '((persp-kill-buffer   . nil)
-                        (persp-remove-buffer . nil)
-                        (persp-add-buffer    . nil)
-                        (persp-switch        . nil)
-                        (persp-window-switch . nil)
-                        (persp-frame-switch  . nil)))))))
+;; (use-package persp-mode
+;;   :config
+;;   (with-eval-after-load "persp-mode-autoloads"
+;;       ;; (setq wg-morph-on nil) ;; switch off animation
+;;       (setq persp-autokill-buffer-on-remove 'kill-weak)
+;;       (add-hook 'after-init-hook #'(lambda () (persp-mode 1))))
+;;   (with-eval-after-load "persp-mode"
+;;     (with-eval-after-load "ivy"
+;;         (add-hook 'ivy-ignore-buffers
+;;                 #'(lambda (b)
+;;                     (when persp-mode
+;;                         (let ((persp (get-current-persp)))
+;;                         (if persp
+;;                             (not (persp-contain-buffer-p b persp))
+;;                             nil)))))
+;; 
+;;         (setq ivy-sort-functions-alist
+;;             (append ivy-sort-functions-alist
+;;                     '((persp-kill-buffer   . nil)
+;;                         (persp-remove-buffer . nil)
+;;                         (persp-add-buffer    . nil)
+;;                         (persp-switch        . nil)
+;;                         (persp-window-switch . nil)
+;;                         (persp-frame-switch  . nil)))))))
 
 ;; ======================
 ;; Terminal Stuff (Not using, maybe someday...)
@@ -491,15 +532,15 @@
 ;; --- Project/Buffer Navigation ---
 (evil-define-key
   '(normal insert visual replace operator motion) 'mjq-intercept-mode-map
-  (kbd "C-p") 'projectile-find-file)
+  (kbd "C-p") 'helm-projectile)
 
 (evil-define-key
   '(normal insert visual replace operator motion) 'mjq-intercept-mode-map
-  (kbd "C-b") 'projectile-display-buffer)
+  (kbd "C-b") 'helm-projectile-switch-to-buffer)
 
 (defhydra hydra-projectile (:color blue
                             :idle 0.5)
-  ("s" projectile-switch-project)
+  ("s" helm-projectile-switch-project)
   ("d" projectile-dired)
   ("r" projectile-invalidate-cache)
   ("b" projectile-ibuffer)
@@ -524,7 +565,7 @@
 ;; Orgnized thematicalls or by package
 (defhydra hydra-space-leader (:color blue
                               :idle 0.5)
-  ("SPC" counsel-M-x)
+  ("SPC" helm-M-x)
   ("p" hydra-projectile/body))
 (evil-define-key
   '(normal visual operator motion) 'mjq-intercept-mode-map
