@@ -59,6 +59,10 @@
 (scroll-bar-mode -1)
 (display-time-mode 1)
 
+;; Otherwise will complain that `ls` does not support `--dired` on osx
+(when (string= system-type "darwin")
+  (setq dired-use-ls-dired nil))
+
 ;; --- Startup Screen ---
 (setq inhibit-startup-screen t)
 ;; TODO: Figure out what I want to do with this
@@ -348,10 +352,66 @@
   :config
   (load-theme 'spacemacs-dark t))
 
+;; --- Org Mode ---
 (use-package org-bullets
   :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+(setq org-special-ctrl-a/e t)
+(setq org-todo-keywords
+      '((sequence "TODO" "IN-PROGRESS" "WAITING"
+                  "|" "DONE" "CANCELED")))
+(setq org-enforce-todo-dependencies t)
+
+(setq org-log-done 'time)
+
+(setq org-hierarchical-todo-statistics nil)
+(setq org-src-preserve-indentation nil
+      org-edit-src-content-indentation 0)
+(defun clever-insert-item ()
+  "Clever insertion of org item."
+  (if (not (org-in-item-p))
+      (insert "\n")
+    (org-insert-item)))
+(defun evil-org-eol-call (fun)
+  "Go to end of line and call provided function.
+FUN function callback"
+  (end-of-line)
+  (funcall fun)
+  (evil-append nil))
+
+(evil-define-key
+  '(normal) 'org-mode-map
+  "t" 'org-todo
+  ">>" 'org-do-demote
+  "<<" 'org-do-promote
+  "<tab>" 'org-cycle
+  "H" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading-respect-content))
+  "T" '(lambda () (interactive) (evil-org-eol-call 'org-insert-todo-heading-respect-content))
+  ;; "H" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading-after-current))
+  ;; "T" '(lambda () (interactive) (evil-org-eol-call 'org-insert-todo-heading-after-current))
   )
+
+;; (general-nmap
+;;   :keymaps 'org-mode-map
+;;   "t" 'org-todo
+;;   "-" 'org-cycle-list-bullet
+;;   "0" 'org-beginning-of-line
+;;   "$" 'org-end-of-line
+;;   "o" '(lambda () (interactive) (evil-org-eol-call 'clever-insert-item))
+;;   "s-o" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading))
+;;   "H" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading-respect-content))
+;;   "T" '(lambda () (interactive) (evil-org-eol-call 'org-insert-todo-heading-respect-content))
+;;   ">>" 'org-do-demote
+;;   "<<" 'org-do-promote
+;;   "s-." 'org-demote-subtree
+;;   "s-," 'org-promote-subtree
+;;   )
+
+
+;; (use-package evil-org
+;;   :config
+;;   )
 
 ;; --- Mode Line ---
 (use-package spaceline

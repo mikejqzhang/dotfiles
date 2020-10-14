@@ -17,6 +17,7 @@
     ~/.zsh:
     ~/.zshrc:
     ~/.emacs.d:
+    ~/.condarc:
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
