@@ -134,6 +134,9 @@ nnoremap <Leader>b :BuffergatorToggle<CR>
 " ===== "ctrl-p" =====
 let g:ctrlp_working_path_mode = 'ra'
 nnoremap <C-b> :CtrlPBuffer<CR>
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_user_command = 'git ls-files . --cached --exclude-standard --others'
 
 
 " ===== "lightline" =====
