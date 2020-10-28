@@ -6,5 +6,4 @@
 # Things here should all be tracked by submodules
 /shell/plugins
 /zsh/plugins
-/vim
 /vim/bundle
