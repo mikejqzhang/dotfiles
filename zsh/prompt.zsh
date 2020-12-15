@@ -7,9 +7,12 @@
 # RPR_EXTRA="[stuff]" - extra content to add to rhs prompt
 
 # Set custom prompt
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main cursor brackets pattern)
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES=(cursor bold)
 
 # Allow for variable/function substitution in prompt
-  setopt prompt_subst
+setopt prompt_subst
 
 # Load color variables to make it easier to color things
 autoload -U colors && colors
