@@ -26,14 +26,8 @@ define_keymap(re.compile(term_str, re.IGNORECASE), {
 
 # Keybindings for Firefox/Chrome
 define_keymap(re.compile(browser_str, re.IGNORECASE), {
-    # Converts Cmd to use Ctrl-Shift
-    K("Super-c"): K("C-c"),
-    K("Super-v"): K("C-v"),
-    K("Super-t"): K("C-t"),
-    K("Super-w"): K("C-w"),
-    K("Super-q"): K("C-q"),
-    K("Super-n"): K("C-n"),
     K("Super-Shift-p"): K("C-Shift-p"),
+    K("Super-r"): K("C-r"),
 }, "browsers")
 
 define_keymap(None, {
@@ -54,4 +48,5 @@ define_keymap(None, {
     K("Super-w"): K("C-w"),
     K("Super-q"): K("C-q"),
     K("Super-n"): K("C-n"),
+    K("Super-f"): K("C-f"),
 })
