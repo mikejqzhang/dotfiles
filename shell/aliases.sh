@@ -1,11 +1,16 @@
 # ----------------
-# Personal aliases
+# OS dependent aliases
 # ----------------
 
 # TODO: Automatically select which options depending on mac vs linux
 # Use colors in coreutils utilities output
 alias ls='ls --color=auto'
+alias open='nautilus'
 # alias ls='ls -G'
+
+# ----------------
+# Personal aliases
+# ----------------
 
 alias grep='grep --color'
 
@@ -17,18 +22,8 @@ alias la='ls -A'
 alias cp='cp -i'
 alias mv='mv -i'
 
-# Personal
+# clear screen
 alias cl='clear'
-
-# LaTeX aliases
-alias pdflatexrm='rm *.aux *.log *.toc *.out *.bbl *.blg'
-
-# Update dotfiles
-dfu() {
-  (
-  cd ~/.dotfiles && git pull --ff-only && ./install -q
-  )
-}
 
 # Go up [n] directories
 up()
@@ -53,61 +48,12 @@ up()
   cd "${cdir}"
 }
 
-
-# ----------------
-# Application aliases
-# ----------------
-alias sublime='open -a Sublime\ Text .'
-
 # ----------------
 # Conda aliases
 # ----------------
 alias csa='source activate'
 alias cda='conda deactivate'
 alias cls='conda env list'
-
-# ----------------
-# ssh aliases
-# ----------------
-
-alias foch='ssh mjqzhang@foch.cs.washington.edu'
-
-attu()
-{
-  if [[ "${1}" == "" ]]; then
-    ssh mjqzhang@attu2.cs.washington.edu
-  else
-    ssh "mjqzhang@attu${1}.cs.washington.edu"
-  fi
-}
-
-scp_attu()
-{
-  if [[ "${1}" == "" ]]; then
-    echo "Error: no target"
-  else
-    if [[ "${2}" == "" ]]; then
-      path="."
-    else
-      path="${2}"
-    fi
-    scp "mjqzhang@attu.cs.washington.edu:${1}" "$path"
-  fi
-}
-
-scp_to_attu()
-{
-  if [[ "${1}" == "" ]]; then
-    echo "Error: no target"
-  else
-    if [[ "${2}" == "" ]]; then
-      path="/homes/iws/mjqzhang/scp_dump"
-    else
-      path="${2}"
-    fi
-    scp "${1}" "mjqzhang@attu.cs.washington.edu:$path"
-  fi
-}
 
 # ----------------
 # tmux aliases
@@ -144,26 +90,8 @@ tks()
 }
 
 # ----------------
-# python aliases
-# ----------------
-
-alias ipy='ipython'
-alias nlp='allennlp'
-
-pym()
-{
-  if [[ "${1}" == "" ]]; then
-    echo "error: no target"
-  else
-    mod=`echo "${1}" | sed "s/\//./g" | sed "s/\.py//g"`
-    # echo "${mod} ${@:2}"
-    python -m ${mod} ${@:2}
-  fi
-}
-
-# ----------------
 # other aliases
 # ----------------
+alias ipy='ipython'
 alias smi='nvidia-smi'
 alias sq='squeue'
-

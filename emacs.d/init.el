@@ -69,25 +69,15 @@
 ;; (setq initial-scratch-message "--- Welcome Back! ---\n\n")
 (setq initial-major-mode 'text-mode)  ;; should also help with load times
 
-;; Make Emacs Start in Fullscreen
-;; (add-hook 'after-frame-make-functions
-;;           '(lambda ()
-;;              (unless (frame-parameter nil 'fullscreen)
-;;                      (toggle-frame-fullscreen))))
-;; (add-hook 'after-init-hook
-;;           '(lambda ()
-;;              (unless (frame-parameter nil 'fullscreen)
-;;                      (toggle-frame-fullscreen))))
-
 ;; --- Editor Config ---
 (blink-cursor-mode -1)
 (global-hl-line-mode 1)
-(setq truncate-lines t)  ;; no line wrapping
+(global-visual-line-mode 1)
 (show-paren-mode 1)
 (prefer-coding-system 'utf-8)
 
-                                        ; --- Font ---
-(set-face-attribute 'default nil :height 120)
+;; --- Font ---
+(set-face-attribute 'default nil :height 140)
 (defun mjq-set-font (&optional frame)
   "Set font to SF Mono if availible in the current FRAME."
   (when frame
@@ -98,7 +88,7 @@
 (add-hook 'after-frame-make-functions 'mjq-set-font)
 (add-hook 'after-init-hook 'mjq-set-font)
 
-                                        ; --- Line Numbers ---
+; --- Line Numbers ---
 (add-hook 'display-line-numbers-mode-hook
           (lambda () (setq display-line-numbers t)))
 (global-display-line-numbers-mode)
@@ -369,11 +359,12 @@
 (use-package eyebrowse
   :config
   (eyebrowse-mode 1))
+
 (use-package persp-mode
   :diminish
   :config
   (with-eval-after-load "persp-mode-autoloads"
-    ;; (setq wg-morph-on nil) ;; switch off animation
+    (setq wg-morph-on nil) ;; switch off animation
     (setq persp-autokill-buffer-on-remove 'kill-weak)
     (add-hook 'after-init-hook #'(lambda () (persp-mode 1))))
   (with-eval-after-load "persp-mode"
@@ -555,6 +546,7 @@
 
 ;; --- Evil Leader Def ---
 ;; Using evil-leader over hydra for easy mode-specific keybindings
+;; Not sure if this actually makes sense to do...
 (use-package evil-leader)
 (global-evil-leader-mode)
 (evil-leader/set-leader ",")
@@ -582,6 +574,21 @@
 
 ;; (setq org-log-done 'time)
 (setq org-hierarchical-todo-statistics nil)
+
+(evil-define-key
+  nil 'ivy-minibuffer-map
+  "C-j" 'ivy-next-line
+  "C-k" 'ivy-previous-line
+  )
+
+(evil-define-key
+  '(normal) 'org-mode-map
+  "t" 'org-todo
+  "-" 'org-cycle-list-bullet
+  "H" 'org-insert-heading-respect-content
+  "T" 'org-insert-todo-heading-respect-content
+  )
+
 
 (evil-define-key
   '(normal) 'org-mode-map
