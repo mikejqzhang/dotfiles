@@ -27,7 +27,7 @@ set scrolloff=5 " buffer 5 lines from top & bottom (when possible)
 set showcmd " show current command
 set noshowmode
 set showmatch " show matching highlighted parens
-set colorcolumn=81 " show line character limit
+set colorcolumn=101 " show line character limit
 
 set lazyredraw " skip redrawing screen in some cases
 set history=10000 " more history
@@ -146,23 +146,6 @@ let g:lightline = {
       \ 'colorscheme': 'solarized',
       \ 'enable': {'statusline': 1, 'tabline': 1}
       \ }
-
-
-" ===== "syntastic" =====
-" TODO: understand these settings
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = {
-      \ 'mode': 'passive',
-      \ 'active_filetypes': [],
-      \ 'passive_filetypes': []
-      \}
-
-nnoremap <leader>s :SyntasticCheck<CR>
-nnoremap <leader>r :SyntasticReset<CR>
-nnoremap <leader>i :SyntasticInfo<CR>
-nnoremap <leader>m :SyntasticToggleMode<CR>
 
 " ===== "nerdtree" =====
 " TODO: understand these settings

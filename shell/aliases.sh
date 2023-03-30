@@ -2,11 +2,14 @@
 # OS dependent aliases
 # ----------------
 
-# TODO: Automatically select which options depending on mac vs linux
 # Use colors in coreutils utilities output
-alias ls='ls --color=auto'
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias ls='ls -G'
+else
+  alias ls='ls --color=auto'
+fi
+
 alias open='nautilus'
-# alias ls='ls -G'
 
 # ----------------
 # Personal aliases
