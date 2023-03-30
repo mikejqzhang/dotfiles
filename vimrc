@@ -66,9 +66,9 @@ set splitright
 
 " highlight current line, but only in active window
 augroup CursorLineOnlyInActiveWindow
-    autocmd!
-    autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-    autocmd WinLeave * setlocal nocursorline
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
 augroup END
 
 
@@ -96,12 +96,36 @@ nnoremap <C-w><C-j> :res -5<CR>
 nnoremap <C-w><C-k> :res +5<CR>
 nnoremap <C-w><C-l> :vertical resize -10<CR>
 
-nnoremap <C-n> :set rnu!<CR>
 nnoremap <leader>v :set paste!<CR>
 nnoremap <leader>ww :%s/\s\+$//g<CR>
 
 "" set clipboard=unnamed " Sets to use system clipboard
 
+" movement relative to display lines
+nnoremap <silent> <Leader>d :call ToggleMovementByDisplayLines()<CR>
+function SetMovementByDisplayLines()
+    noremap <buffer> <silent> <expr> k v:count ? 'k' : 'gk'
+    noremap <buffer> <silent> <expr> j v:count ? 'j' : 'gj'
+    noremap <buffer> <silent> 0 g0
+    noremap <buffer> <silent> $ g$
+endfunction
+function ToggleMovementByDisplayLines()
+    if !exists('b:movement_by_display_lines')
+        let b:movement_by_display_lines = 0
+    endif
+    if b:movement_by_display_lines
+        let b:movement_by_display_lines = 0
+        silent! nunmap <buffer> k
+        silent! nunmap <buffer> j
+        silent! nunmap <buffer> 0
+        silent! nunmap <buffer> $
+    else
+        let b:movement_by_display_lines = 1
+        call SetMovementByDisplayLines()
+    endif
+endfunction
+nnoremap <C-n> :set rnu!<CR>
+:call ToggleMovementByDisplayLines()
 
 "---------------------
 " tabs config
@@ -148,26 +172,14 @@ let g:lightline = {
       \ }
 
 " ===== "nerdtree" =====
-" TODO: understand these settings
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd BufEnter * lcd %:p:h
-
-function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. 
-        \ a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-  exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. 
-        \ a:extension .'$#'
-endfunction
-
-call NERDTreeHighlightFile('py', 'green', 'none', 'green', '#151515')
-call NERDTreeHighlightFile('ipynb', 'cyan', 'none', 'cyan', '#151515')
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() 
+      \ | quit | endif
 
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 
-" ====== "solarized theme" ======
-" ===== "a e s t h e t i c" =====
+" ===== "solarized theme" =====
 syntax enable
 set background=dark
 
@@ -178,6 +190,14 @@ let g:solarized_visibility = 'high'
 let g:solarized_contrast = 'high'
 let g:solarized_termcolors = 16
 colorscheme solarized " This must be set after all solarized things
+
+" ===== "ale" =====
+:hi clear SignColumn " Removes bugged highlight in gutter. Must be done after loading colorscheme.
+let g:ale_sign_error = '!!'
+let g:ale_sign_warning = '--'
+" let g:ale_echo_msg_error_str = 'E'
+" let g:ale_echo_msg_warning_str = 'W'
+" let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
 "---------------------
 " Local customizations

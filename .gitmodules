@@ -43,3 +43,12 @@
 [submodule "shell/plugins/gnome-terminal-colors-solarized"]
 	path = shell/plugins/gnome-terminal-colors-solarized
 	url = https://github.com/aruhier/gnome-terminal-colors-solarized.git
+[submodule "vim/bundle/vim-surround"]
+	path = vim/bundle/vim-surround
+	url = git@github.com:tpope/vim-surround.git
+[submodule "vim/bundle/ale"]
+	path = vim/bundle/ale
+	url = git@github.com:dense-analysis/ale.git
+[submodule "vim/bundle/YouCompleteMe"]
+	path = vim/bundle/YouCompleteMe
+	url = git@github.com:ycm-core/YouCompleteMe.git
