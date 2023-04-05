@@ -9,7 +9,10 @@ else
   alias ls='ls --color=auto'
 fi
 
-alias open='nautilus'
+# Open file in gui browser
+if [[ "$OSTYPE" != "darwin"* ]]; then
+  alias open='nautilus'
+fi
 
 # ----------------
 # Personal aliases
@@ -64,6 +67,11 @@ alias cls='conda env list'
 
 alias tls='tmux ls'
 
+
+tcs()
+{
+  csa "${1}" && tmux setenv TMUX_CONDA_DEFAULT_ENV "${1}" 
+}
 
 tat()
 {

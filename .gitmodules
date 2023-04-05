@@ -52,3 +52,6 @@
 [submodule "vim/bundle/YouCompleteMe"]
 	path = vim/bundle/YouCompleteMe
 	url = git@github.com:ycm-core/YouCompleteMe.git
+[submodule "vim/bundle/vim-argwrap"]
+	path = vim/bundle/vim-argwrap
+	url = git@github.com:FooSoft/vim-argwrap.git

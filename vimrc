@@ -126,6 +126,10 @@ function ToggleMovementByDisplayLines()
 endfunction
 nnoremap <C-n> :set rnu!<CR>
 :call ToggleMovementByDisplayLines()
+"
+" syntax highlighting
+syntax enable
+autocmd BufNewFile,BufRead *.jsonl set syntax=json
 
 "---------------------
 " tabs config
@@ -179,8 +183,6 @@ autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTa
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 
-" ===== "solarized theme" =====
-syntax enable
 set background=dark
 
 let g:solarized_bold = 0
@@ -197,10 +199,32 @@ let g:ale_sign_error = '!!'
 let g:ale_sign_warning = '--'
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_echo_msg_format = '[%linter%:%severity%] %s [%code%]'
 let g:ale_linters={
       \ 'python': ['pylint'],
       \}
+
+" ===== "youcompleteme" =====
+let g:ycm_key_list_stop_completion = ['<Enter>']
+let g:ycm_autoclose_preview_window_after_completion = 1
+nnoremap <leader>g :YcmCompleter GoTo<CR>
+nnoremap <leader>c :pc<CR>
+
+function! ToggleYcmGetDoc() abort
+    " loop through all the windows in the current tab page
+    for win in range(1, winnr('$'))
+	    let preview_window = getwinvar(win, '&previewwindow') ? win : 0
+    endfor
+    if preview_window > 0
+	    pclose
+    else
+      YcmCompleter GetDoc
+    endif
+endfunction
+nnoremap <leader>d :call ToggleYcmGetDoc()<CR>
+"
+" ===== "argwrap" =====
+nnoremap <silent> <leader>a :ArgWrap<CR>
 
 "---------------------
 " Local customizations

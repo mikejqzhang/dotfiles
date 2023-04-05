@@ -1,11 +1,11 @@
 # Allow local customizations in the ~/.shell_local_before file
 if [ -f ~/.shell_local_before ]; then
-    source ~/.shell_local_before
+  source ~/.shell_local_before
 fi
 
 # Allow local customizations in the ~/.zshrc_local_before file
 if [ -f ~/.zshrc_local_before ]; then
-    source ~/.zshrc_local_before
+  source ~/.zshrc_local_before
 fi
 # 
 # # External plugins (initialized before)
@@ -26,20 +26,16 @@ source ~/.zsh/prompt.zsh
 # External plugins (initialized after)
 source ~/.zsh/plugins_after.zsh
 
-if [ -n "$CONDA_DEFAULT_ENV" ]; then                                                                                                                                         
-    TMUX_CONDA_DEFAULT_ENV=$CONDA_DEFAULT_ENV
-fi
-
 # Allow local customizations in the ~/.shell_local_after file
-if [ -f ~/.shell_local_after ]; then
-    source ~/.shell_local_after
+if [ -f ~/.shell_local_after.sh ]; then
+  source ~/.shell_local_after.sh
 fi
 
 if [ -n "$TMUX_CONDA_DEFAULT_ENV" ]; then                                                                                                                                         
-    conda activate $TMUX_CONDA_DEFAULT_ENV
+  conda activate $TMUX_CONDA_DEFAULT_ENV
 fi
 
 # Allow local customizations in the ~/.zshrc_local_after file
 if [ -f ~/.zshrc_local_after ]; then
-    source ~/.zshrc_local_after
+  source ~/.zshrc_local_after
 fi
