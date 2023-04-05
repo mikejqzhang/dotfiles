@@ -1,17 +1,8 @@
 "---------------------
-" essentials
-"---------------------
-" not vi compatible
-set nocompatible
-
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
-call pathogen#helptags()
-
-
-"---------------------
 " defaults
 "---------------------
+set nocompatible " not vi compatible
+
 set nu " line numbers
 set rnu " relative line numbers slowaf
 
