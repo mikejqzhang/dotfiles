@@ -24,6 +24,7 @@
 
 # OS generated files #
 ######################
+.nfs*
 .DS_Store
 .DS_Store?
 ._*

@@ -94,7 +94,7 @@ tns()
 tks()
 {
   if [[ "${1}" == "" ]]; then
-    echo "error: no target"
+    echo "Error: no target"
   else
     tmux kill-session -t "${1}"
   fi
@@ -106,3 +106,12 @@ tks()
 alias ipy='ipython'
 alias smi='nvidia-smi'
 alias sq='squeue'
+
+jupyter_remote()
+{
+  if [[ "${1}" == "" ]]; then
+    echo "Error: no port"
+  else
+    jupyter notebook --no-browser --port="${1}"
+  fi
+}
