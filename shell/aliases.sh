@@ -5,8 +5,10 @@
 # Use colors in coreutils utilities output
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias ls='ls -G'
-else
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
   alias ls='ls --color=always'
+else
+  echo "Unknown OSTYPE: $OSTYPE"
 fi
 
 # Open file in gui browser

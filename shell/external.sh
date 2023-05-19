@@ -1,5 +1,6 @@
-pwd
-eval `dircolors ~/.shell/plugins/dircolors-solarized/dircolors.256dark`
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  eval `dircolors ~/.shell/plugins/dircolors-solarized/dircolors.256dark`
+fi
 
 # pip should only run if there is a virtualenv currently activated
 # Now just here to make sure pip doesn't by default work as to not install globally
