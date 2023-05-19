@@ -2,8 +2,3 @@
 /emacs.d/*
 !/emacs.d/lisp
 !/emacs.d/init.el
-
-# Things here should all be tracked by submodules
-/shell/plugins
-/zsh/plugins
-/vim/pack/mjqzhang/start

@@ -42,13 +42,16 @@
 	url = https://github.com/aruhier/gnome-terminal-colors-solarized.git
 [submodule "vim/pack/mjqzhang/start/vim-surround"]
 	path = vim/pack/mjqzhang/start/vim-surround
-	url = git@github.com:tpope/vim-surround.git
+	url = https://github.com/tpope/vim-surround.git
 [submodule "vim/pack/mjqzhang/start/ale"]
 	path = vim/pack/mjqzhang/start/ale
-	url = git@github.com:dense-analysis/ale.git
+	url = https://github.com/dense-analysis/ale.git
 [submodule "vim/pack/mjqzhang/start/YouCompleteMe"]
 	path = vim/pack/mjqzhang/start/YouCompleteMe
-	url = git@github.com:ycm-core/YouCompleteMe.git
+	url = https://github.com/ycm-core/YouCompleteMe.git
 [submodule "vim/pack/mjqzhang/start/vim-argwrap"]
 	path = vim/pack/mjqzhang/start/vim-argwrap
-	url = git@github.com:FooSoft/vim-argwrap.git
+	url = https://github.com/FooSoft/vim-argwrap.git
+[submodule "vim/pack/mjqzhang/start/--force"]
+	path = vim/pack/mjqzhang/start/--force
+	url = https://github.com/ycm-core/YouCompleteMe.git
