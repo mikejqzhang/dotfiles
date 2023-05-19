@@ -1,5 +1,9 @@
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  eval `gdircolors ~/.shell/plugins/dircolors-solarized/dircolors.256dark`
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
   eval `dircolors ~/.shell/plugins/dircolors-solarized/dircolors.256dark`
+else
+  echo "Unknown OSTYPE: $OSTYPE"
 fi
 
 # pip should only run if there is a virtualenv currently activated

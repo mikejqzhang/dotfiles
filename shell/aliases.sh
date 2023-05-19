@@ -4,7 +4,7 @@
 
 # Use colors in coreutils utilities output
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  alias ls='ls -G'
+  alias ls='gls --color=always'
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
   alias ls='ls --color=always'
 else
