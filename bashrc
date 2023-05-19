@@ -3,18 +3,13 @@ if [ -n "$CONDA_DEFAULT_ENV" ]; then
 fi
 
 # Allow local customizations in the ~/.shell_local_before file
-if [ -f ~/.shell_local_before ]; then
-    source ~/.shell_local_before
+if [ -f ~/.shell_local_before.sh ]; then
+    source ~/.shell_local_before.sh
 fi
 
 # Source local config
-if [ -f ~/.bashrc_local_before ]; then
-    source ~/.bashrc_local_before
-fi
-
-# Source local config before
-if [ -f ~/.bashrc_local_before ]; then
-    source ~/.bashrc_local_before
+if [ -f ~/.bashrc_local_before.sh ]; then
+    source ~/.bashrc_local_before.sh
 fi
 
 export TERM=xterm-256color
@@ -37,8 +32,8 @@ if [ -n "$CONDA_DEFAULT_ENV" ]; then
 fi
 
 # Allow local customizations in the ~/.shell_local_after file
-if [ -f ~/.shell_local_after ]; then
-    source ~/.shell_local_after
+if [ -f ~/.shell_local_after.sh ]; then
+    source ~/.shell_local_after.sh
 fi
 
 if [ -n "$TMUX_CONDA_DEFAULT_ENV" ]; then                                                                                                                                         
@@ -46,6 +41,6 @@ if [ -n "$TMUX_CONDA_DEFAULT_ENV" ]; then
 fi
 
 # Source local config
-if [ -f ~/.bashrc_local_after ]; then
-    source ~/.bashrc_local_after
+if [ -f ~/.bashrc_local_after.sh ]; then
+    source ~/.bashrc_local_after.sh
 fi
