@@ -36,6 +36,6 @@ if [ -n "$TMUX_CONDA_DEFAULT_ENV" ]; then
 fi
 
 # Allow local customizations in the ~/.zshrc_local_after file
-if [ -f ~/.zshrc_local_after ]; then
-  source ~/.zshrc_local_after
+if [ -f ~/.zshrc_local_after.sh ]; then
+  source ~/.zshrc_local_after.sh
 fi
