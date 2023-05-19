@@ -37,9 +37,6 @@
 [submodule "vim/pack/mjqzhang/start/vim-fugitive"]
 	path = vim/pack/mjqzhang/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule "shell/plugins/gnome-terminal-colors-solarized"]
-	path = shell/plugins/gnome-terminal-colors-solarized
-	url = https://github.com/aruhier/gnome-terminal-colors-solarized.git
 [submodule "vim/pack/mjqzhang/start/vim-surround"]
 	path = vim/pack/mjqzhang/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git
@@ -52,6 +49,3 @@
 [submodule "vim/pack/mjqzhang/start/vim-argwrap"]
 	path = vim/pack/mjqzhang/start/vim-argwrap
 	url = https://github.com/FooSoft/vim-argwrap.git
-[submodule "vim/pack/mjqzhang/start/--force"]
-	path = vim/pack/mjqzhang/start/--force
-	url = https://github.com/ycm-core/YouCompleteMe.git

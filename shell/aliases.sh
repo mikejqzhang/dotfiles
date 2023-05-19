@@ -6,7 +6,7 @@
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias ls='ls -G'
 else
-  alias ls='ls --color=auto'
+  alias ls='ls --color=always'
 fi
 
 # Open file in gui browser
