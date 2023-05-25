@@ -100,6 +100,7 @@ function SetMovementByDisplayLines()
     noremap <buffer> <silent> 0 g0
     noremap <buffer> <silent> $ g$
 endfunction
+
 function ToggleMovementByDisplayLines()
     if !exists('b:movement_by_display_lines')
         let b:movement_by_display_lines = 0
@@ -157,7 +158,6 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_user_command = 'git ls-files . --cached --exclude-standard --others'
 
-
 " ===== "lightline" =====
 set laststatus=2 " required for lightline to show up
 " TODO: Configure lightline
@@ -201,18 +201,25 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 nnoremap <leader>g :YcmCompleter GoTo<CR>
 nnoremap <leader>c :pc<CR>
 
-function! ToggleYcmGetDoc() abort
-    " loop through all the windows in the current tab page
-    for win in range(1, winnr('$'))
-	    let preview_window = getwinvar(win, '&previewwindow') ? win : 0
-    endfor
-    if preview_window > 0
-	    pclose
-    else
-      YcmCompleter GetDoc
-    endif
-endfunction
-nnoremap <leader>d :call ToggleYcmGetDoc()<CR>
+if v:version >= 801 && has("python3")
+  packadd YouCompleteMe
+  function! ToggleYcmGetDoc() abort
+      " loop through all the windows in the current tab page
+      for win in range(1, winnr('$'))
+        let preview_window = getwinvar(win, '&previewwindow') ? win : 0
+      endfor
+      if preview_window > 0
+        pclose
+      else
+        YcmCompleter GetDoc
+      endif
+  endfunction
+  nnoremap <leader>d :call ToggleYcmGetDoc()<CR>
+else
+  packadd supertab
+endif
+
+
 "
 " ===== "argwrap" =====
 nnoremap <silent> <leader>a :ArgWrap<CR>
