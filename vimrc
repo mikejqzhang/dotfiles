@@ -82,10 +82,10 @@ nnoremap <C-w>h :split<CR>
 nnoremap <C-w>u :vertical split<CR>
 
 " split resizing
-nnoremap <C-w><C-h> :vertical resize +10<CR>
-nnoremap <C-w><C-j> :res -5<CR>
-nnoremap <C-w><C-k> :res +5<CR>
-nnoremap <C-w><C-l> :vertical resize -10<CR>
+nnoremap <C-w><C-h> :vertical resize -10<CR>
+nnoremap <C-w><C-j> :res +5<CR>
+nnoremap <C-w><C-k> :res -5<CR>
+nnoremap <C-w><C-l> :vertical resize +10<CR>
 
 nnoremap <leader>v :set paste!<CR>
 nnoremap <leader>ww :%s/\s\+$//g<CR>
@@ -196,34 +196,70 @@ let g:ale_linters={
       \}
 
 " ===== "Completion" =====
-if (v:version >= 801 && has("python3")) || has("nvim")
-  packadd YouCompleteMe
-  let g:ycm_key_list_stop_completion = ['<Enter>']
-  let g:ycm_autoclose_preview_window_after_completion = 1
-  nnoremap <leader>g :YcmCompleter GoTo<CR>
-  nnoremap <leader>c :pc<CR>
-  function! ToggleYcmGetDoc() abort
-      " loop through all the windows in the current tab page
-      for win in range(1, winnr('$'))
-        let preview_window = getwinvar(win, '&previewwindow') ? win : 0
-      endfor
-      if preview_window > 0
-        pclose
-      else
-        YcmCompleter GetDoc
-      endif
-  endfunction
-  nnoremap <leader>d :call ToggleYcmGetDoc()<CR>
-else
-  packadd supertab
-endif
+packadd supertab
+"if (v:version >= 801 && has("python3")) || has("nvim")
+"  packadd YouCompleteMe
+"  let g:ycm_key_list_stop_completion = ['<Enter>']
+"  let g:ycm_autoclose_preview_window_after_completion = 1
+"  nnoremap <leader>g :YcmCompleter GoTo<CR>
+"  nnoremap <leader>c :pc<CR>
+"  function! ToggleYcmGetDoc() abort
+"      " loop through all the windows in the current tab page
+"      for win in range(1, winnr('$'))
+"        let preview_window = getwinvar(win, '&previewwindow') ? win : 0
+"      endfor
+"      if preview_window > 0
+"        pclose
+"      else
+"        YcmCompleter GetDoc
+"      endif
+"  endfunction
+"  nnoremap <leader>d :call ToggleYcmGetDoc()<CR>
+"else
+"  packadd supertab
+"endif
 
 " ===== "argwrap" =====
 nnoremap <silent> <leader>a :ArgWrap<CR>
 
-" ===== "argwrap" =====
+" undo history
 set undodir=~/.vim/undo-history
 set undofile
+
+" gundo
+nnoremap <Leader>u :GundoToggle<CR>
+let g:gundo_width = 60
+let g:gundo_preview_height = 20
+if has('python3')
+    let g:gundo_prefer_python3 = 1
+endif
+
+" easymotion
+map <Space> <Plug>(easymotion-prefix)
+
+" incsearch
+map / <Plug>(incsearch-forward)
+map ? <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+" incsearch-easymotion
+map <Space>/ <Plug>(incsearch-easymotion-/)
+map <Space>? <Plug>(incsearch-easymotion-?)
+map <Space>g/ <Plug>(incsearch-easymotion-stay)
+
+" over
+noremap <Space>: :OverCommandLine<CR>
+
+let g:ackprg = 'ag --vimgrep'
+command -nargs=+ Gag Gcd | Ack! <args>
+nnoremap K :Gag "\b<C-R><C-W>\b"<CR>:cw<CR>
+if executable('ag')
+    let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+    let g:ackprg = 'ag --vimgrep'
+endif
+
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
 
 "---------------------
 " Local customizations

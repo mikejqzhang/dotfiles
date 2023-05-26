@@ -70,3 +70,24 @@
 	path = vim/pack/mjqzhang/opt/YouCompleteMe
 	url = https://github.com/ycm-core/YouCompleteMe.git
   ignore = untracked
+[submodule "vim/pack/mjqzhang/start/gundo.vim"]
+	path = vim/pack/mjqzhang/start/gundo.vim
+	url = git@github.com:sjl/gundo.vim.git
+[submodule "vim/pack/mjqzhang/start/incsearch.vim"]
+	path = vim/pack/mjqzhang/start/incsearch.vim
+	url = git@github.com:haya14busa/incsearch.vim.git
+[submodule "vim/pack/mjqzhang/start/vim-easymotion"]
+	path = vim/pack/mjqzhang/start/vim-easymotion
+	url = git@github.com:easymotion/vim-easymotion.git
+[submodule "vim/pack/mjqzhang/start/incsearch-easymotion.vim"]
+	path = vim/pack/mjqzhang/start/incsearch-easymotion.vim
+	url = https://github.com/haya14busa/incsearch-easymotion.vim
+[submodule "vim/pack/mjqzhang/start/vim-over"]
+	path = vim/pack/mjqzhang/start/vim-over
+	url = git@github.com:osyo-manga/vim-over.git
+[submodule "vim/pack/mjqzhang/start/nerdcommenter"]
+	path = vim/pack/mjqzhang/start/nerdcommenter
+	url = git@github.com:preservim/nerdcommenter.git
+[submodule "vim/pack/mjqzhang/start/ack.vim"]
+	path = vim/pack/mjqzhang/start/ack.vim
+	url = git@github.com:mileszs/ack.vim.git
