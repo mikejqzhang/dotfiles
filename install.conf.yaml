@@ -5,6 +5,9 @@
 
 - clean: ['~', '~/.config']
 
+- create:
+  - ~/.vim/undo-history
+
 - link:
     ~/dotfiles: ''
     ~/.bash:

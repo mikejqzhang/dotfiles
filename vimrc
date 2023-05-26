@@ -174,8 +174,8 @@ autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTa
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 
+" ===== "Theme" =====
 set background=dark
-
 let g:solarized_bold = 0
 let g:solarized_underline = 0
 let g:solarized_italic = 0
@@ -195,14 +195,13 @@ let g:ale_linters={
       \ 'python': ['pylint'],
       \}
 
-" ===== "youcompleteme" =====
-let g:ycm_key_list_stop_completion = ['<Enter>']
-let g:ycm_autoclose_preview_window_after_completion = 1
-nnoremap <leader>g :YcmCompleter GoTo<CR>
-nnoremap <leader>c :pc<CR>
-
+" ===== "Completion" =====
 if (v:version >= 801 && has("python3")) || has("nvim")
   packadd YouCompleteMe
+  let g:ycm_key_list_stop_completion = ['<Enter>']
+  let g:ycm_autoclose_preview_window_after_completion = 1
+  nnoremap <leader>g :YcmCompleter GoTo<CR>
+  nnoremap <leader>c :pc<CR>
   function! ToggleYcmGetDoc() abort
       " loop through all the windows in the current tab page
       for win in range(1, winnr('$'))
@@ -219,10 +218,12 @@ else
   packadd supertab
 endif
 
-
-"
 " ===== "argwrap" =====
 nnoremap <silent> <leader>a :ArgWrap<CR>
+
+" ===== "argwrap" =====
+set undodir=~/.vim/undo-history
+set undofile
 
 "---------------------
 " Local customizations

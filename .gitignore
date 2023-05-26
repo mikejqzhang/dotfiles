@@ -1,4 +1,4 @@
-# Common pattern of ignoring everying in a dir (*), then overriding (!)
 /emacs.d/*
-!/emacs.d/lisp
 !/emacs.d/init.el
+
+vim/undo-history/
