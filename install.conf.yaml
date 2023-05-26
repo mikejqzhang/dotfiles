@@ -15,6 +15,7 @@
     ~/.tmux.conf:
     ~/.vim:
     ~/.vimrc:
+    ~/.config/nvim: "nvim"
     ~/.zsh:
     ~/.zshrc:
     ~/.emacs.d:

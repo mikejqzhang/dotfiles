@@ -201,7 +201,7 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 nnoremap <leader>g :YcmCompleter GoTo<CR>
 nnoremap <leader>c :pc<CR>
 
-if v:version >= 801 && has("python3")
+if (v:version >= 801 && has("python3")) || has("nvim")
   packadd YouCompleteMe
   function! ToggleYcmGetDoc() abort
       " loop through all the windows in the current tab page
