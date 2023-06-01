@@ -93,31 +93,31 @@ nnoremap <leader>ww :%s/\s\+$//g<CR>
 "" set clipboard=unnamed " Sets to use system clipboard
 
 " movement relative to display lines
-nnoremap <silent> <Leader>d :call ToggleMovementByDisplayLines()<CR>
-function SetMovementByDisplayLines()
-    noremap <buffer> <silent> <expr> k v:count ? 'k' : 'gk'
-    noremap <buffer> <silent> <expr> j v:count ? 'j' : 'gj'
-    noremap <buffer> <silent> 0 g0
-    noremap <buffer> <silent> $ g$
-endfunction
-
-function ToggleMovementByDisplayLines()
-    if !exists('b:movement_by_display_lines')
-        let b:movement_by_display_lines = 0
-    endif
-    if b:movement_by_display_lines
-        let b:movement_by_display_lines = 0
-        silent! nunmap <buffer> k
-        silent! nunmap <buffer> j
-        silent! nunmap <buffer> 0
-        silent! nunmap <buffer> $
-    else
-        let b:movement_by_display_lines = 1
-        call SetMovementByDisplayLines()
-    endif
-endfunction
-nnoremap <C-n> :set rnu!<CR>
-:call ToggleMovementByDisplayLines()
+" nnoremap <silent> <Leader>d :call ToggleMovementByDisplayLines()<CR>
+" function SetMovementByDisplayLines()
+"     noremap <buffer> <silent> <expr> k v:count ? 'k' : 'gk'
+"     noremap <buffer> <silent> <expr> j v:count ? 'j' : 'gj'
+"     noremap <buffer> <silent> 0 g0
+"     noremap <buffer> <silent> $ g$
+" endfunction
+" 
+" function ToggleMovementByDisplayLines()
+"     if !exists('b:movement_by_display_lines')
+"         let b:movement_by_display_lines = 0
+"     endif
+"     if b:movement_by_display_lines
+"         let b:movement_by_display_lines = 0
+"         silent! nunmap <buffer> k
+"         silent! nunmap <buffer> j
+"         silent! nunmap <buffer> 0
+"         silent! nunmap <buffer> $
+"     else
+"         let b:movement_by_display_lines = 1
+"         call SetMovementByDisplayLines()
+"     endif
+" endfunction
+" nnoremap <C-n> :set rnu!<CR>
+" :call ToggleMovementByDisplayLines()
 "
 " syntax highlighting
 syntax enable
@@ -192,11 +192,29 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%:%severity%] %s [%code%]'
 let g:ale_linters={
-      \ 'python': ['pylint'],
+      \ 'python': ['pylint', 'pylsp'],
       \}
+let g:ale_completion_enabled = 1
+nnoremap <leader>g :ALEGoToDefinition<CR>
+nnoremap <leader>d :call ToggleALEHover()<CR>
+
+function! ToggleALEHover() abort
+    " loop through all the windows in the current tab page
+    for win in range(1, winnr('$'))
+      " let preview_window = getwinvar(win, 'ALEPreviewWindow') ? win : 0
+      let preview_window = getwinvar(win, '&previewwindow') ? win : 0
+    endfor
+    if preview_window > 0
+      pclose
+    else
+      ALEHover
+    endif
+endfunction
+
 
 " ===== "Completion" =====
 packadd supertab
+
 "if (v:version >= 801 && has("python3")) || has("nvim")
 "  packadd YouCompleteMe
 "  let g:ycm_key_list_stop_completion = ['<Enter>']
