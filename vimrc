@@ -261,6 +261,7 @@ endif
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
 
+nmap Q <Nop>
 "---------------------
 " Local customizations
 "---------------------
