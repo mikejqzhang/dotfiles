@@ -88,7 +88,6 @@ nnoremap <C-w><C-k> :res -5<CR>
 nnoremap <C-w><C-l> :vertical resize +10<CR>
 
 nnoremap <leader>v :set paste!<CR>
-nnoremap <leader>ww :%s/\s\+$//g<CR>
 
 "" set clipboard=unnamed " Sets to use system clipboard
 
@@ -172,7 +171,7 @@ autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTa
       \ | quit | endif
 
 nnoremap <leader>n :NERDTreeToggle<CR>
-nnoremap <leader>f :NERDTreeFind<CR>
+" nnoremap <leader>f :NERDTreeFind<CR>
 
 " ===== "Theme" =====
 set background=dark
@@ -213,6 +212,9 @@ endfunction
 
 
 " ===== "Completion" =====
+let g:SuperTabCrMapping = 1
+let g:SuperTabMappingForward  = '<s-tab>'
+let g:SuperTabMappingBackward = '<tab>'
 packadd supertab
 
 "if (v:version >= 801 && has("python3")) || has("nvim")
@@ -277,7 +279,7 @@ if executable('ag')
 endif
 
 cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
+nnoremap <leader>f :Ack!<Space>
 
 nmap Q <Nop>
 "---------------------

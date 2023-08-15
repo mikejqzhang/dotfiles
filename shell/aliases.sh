@@ -68,6 +68,7 @@ alias cls='conda env list'
 # ----------------
 
 alias tls='tmux ls'
+alias tmux_logout='tmux detach-client -a'
 
 
 tcs()
