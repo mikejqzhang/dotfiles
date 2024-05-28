@@ -5,8 +5,6 @@
 
 - clean: ['~', '~/.config']
 
-- create:
-  - ~/.vim/undo-history
 
 - link:
     ~/dotfiles: ''
@@ -24,6 +22,9 @@
     ~/.emacs.d:
     ~/.condarc:
     ~/.pylintrc:
+
+- create:
+  - ~/.vim/undo-history
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
