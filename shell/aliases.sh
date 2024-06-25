@@ -81,7 +81,7 @@ tat()
   if [[ "${1}" == "" ]]; then
     echo "Error: no target"
   else
-    tmux a -t "${1}"
+    tmux -2 a -t "${1}"
   fi
 }
 
@@ -90,7 +90,7 @@ tns()
   if [[ "${1}" == "" ]]; then
     echo "Error: no session name"
   else
-    tmux new-session -s "${1}"
+    tmux -2 new-session -s "${1}"
   fi
 }
 
@@ -118,3 +118,9 @@ jupyter_remote()
     jupyter notebook --no-browser --port="${1}"
   fi
 }
+
+# ----------------
+# AI2
+# ----------------
+alias bsa='beaker session attach'
+alias bls='beaker session list'

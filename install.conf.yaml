@@ -8,7 +8,9 @@
 
 - link:
     ~/dotfiles: ''
+    ~/projects: '..'
     ~/.bash:
+    ~/.profile:
     ~/.bashrc:
     ~/.gitconfig:
     ~/.gitignore_global:
@@ -22,6 +24,8 @@
     ~/.emacs.d:
     ~/.condarc:
     ~/.pylintrc:
+    ~/.netrc:
+    ~/.shell_local_after.sh:
 
 - create:
   - ~/.vim/undo-history

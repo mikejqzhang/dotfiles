@@ -232,6 +232,13 @@ function parse_git_detached() {
     fi
   }
 
+
+function beaker_prompt_string() {
+    if [[ "${BEAKER_JOB_ID}" ]]; then
+      echo "%{$fg[orange]%}[BEAKER] %{$reset_color%}"
+    fi
+}
+
 PROMPT_MODE=0
 PROMPT_MODES=4
 
@@ -250,14 +257,15 @@ function LCMD() {
 
 # Prompt
 function PCMD() {
-  if (( PROMPT_MODE == 0 )); then
-    echo "$(RPR_INFO)$(GIT_PROMPT)\n$(PR_ERROR)$(PR_ARROW) " # space at the end
-    # echo "$(PR_EXTRA)$(PR_DIR)\n$(PR_ERROR)$(PR_ARROW) " # space at the end
-  elif (( PROMPT_MODE == 1 )); then
-    echo "$(RPR_INFO)$(GIT_PROMPT)\n$(PR_ERROR)$(PR_ARROW) " # space at the end
-  else
-    echo "$(RPR_INFO)$(GIT_PROMPT)\n$(PR_ERROR)$(PR_ARROW) " # space at the end
-  fi
+  echo "$(beaker_prompt_string)$(RPR_INFO)$(GIT_PROMPT)\n$(PR_ERROR)$(PR_ARROW) " # space at the end
+   #if (( PROMPT_MODE == 0 )); then
+   #  echo "$(RPR_INFO)$(GIT_PROMPT)\n$(PR_ERROR)$(PR_ARROW) " # space at the end
+   #  # echo "$(PR_EXTRA)$(PR_DIR)\n$(PR_ERROR)$(PR_ARROW) " # space at the end
+   #elif (( PROMPT_MODE == 1 )); then
+   #  echo "$(RPR_INFO)$(GIT_PROMPT)\n$(PR_ERROR)$(PR_ARROW) " # space at the end
+   #else
+   #  echo "$(RPR_INFO)$(GIT_PROMPT)\n$(PR_ERROR)$(PR_ARROW) " # space at the end
+   #fi
 }
 
 function GIT_PROMPT() {
@@ -279,13 +287,7 @@ function RPR_EXTRA() {
 
 # Right-hand prompt
 function RCMD() {
-  # if (( PROMPT_MODE == 0 )); then
-  #   echo "$(RPR_INFO)$(git_prompt_string)$(RPR_EXTRA)"
-  # elif (( PROMPT_MODE <= 2 )); then
-  #   echo "$(git_prompt_string)$(RPR_EXTRA)"
-  # else
-  #   echo "$(RPR_EXTRA)"
-  # fi
+  # echo "$(beaker_prompt_string)"
 }
 
 ASYNC_PROC=0

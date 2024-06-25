@@ -2,3 +2,5 @@
 !/emacs.d/init.el
 
 vim/undo-history/
+shell_local_after.sh
+netrc
