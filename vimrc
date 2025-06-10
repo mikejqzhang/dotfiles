@@ -247,6 +247,7 @@ endfunction
 "
 " ===== "Copilot" =====
 if has("nvim")
+  nnoremap <silent> <leader>c :Copilot panel<CR>
   packadd copilot.vim
 else
   let g:SuperTabCrMapping = 1
