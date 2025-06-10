@@ -212,32 +212,50 @@ endfunction
 
 
 " ===== "Completion" =====
-let g:SuperTabCrMapping = 1
-let g:SuperTabMappingForward  = '<s-tab>'
-let g:SuperTabMappingBackward = '<tab>'
-packadd supertab
+" let g:SuperTabCrMapping = 1
+" let g:SuperTabMappingForward  = '<s-tab>'
+" let g:SuperTabMappingBackward = '<tab>'
+" packadd supertab
 
-"if (v:version >= 801 && has("python3")) || has("nvim")
-"  packadd YouCompleteMe
-"  let g:ycm_key_list_stop_completion = ['<Enter>']
-"  let g:ycm_autoclose_preview_window_after_completion = 1
-"  nnoremap <leader>g :YcmCompleter GoTo<CR>
-"  nnoremap <leader>c :pc<CR>
-"  function! ToggleYcmGetDoc() abort
-"      " loop through all the windows in the current tab page
-"      for win in range(1, winnr('$'))
-"        let preview_window = getwinvar(win, '&previewwindow') ? win : 0
-"      endfor
-"      if preview_window > 0
-"        pclose
-"      else
-"        YcmCompleter GetDoc
-"      endif
-"  endfunction
-"  nnoremap <leader>d :call ToggleYcmGetDoc()<CR>
-"else
-"  packadd supertab
-"endif
+" if (v:version >= 801 && has("python3")) || has("nvim")
+"   packadd YouCompleteMe
+"   let g:ycm_key_list_stop_completion = ['<Enter>']
+"   let g:ycm_autoclose_preview_window_after_completion = 1
+"   nnoremap <leader>g :YcmCompleter GoTo<CR>
+"   nnoremap <leader>c :pc<CR>
+"   function! ToggleYcmGetDoc() abort
+"       " loop through all the windows in the current tab page
+"       for win in range(1, winnr('$'))
+"         let preview_window = getwinvar(win, '&previewwindow') ? win : 0
+"       endfor
+"       if preview_window > 0
+"         pclose
+"       else
+"         YcmCompleter GetDoc
+"       endif
+"   endfunction
+"   nnoremap <leader>d :call ToggleYcmGetDoc()<CR>
+" else
+"   packadd supertab
+" endif
+"
+" ===== "Completion" =====
+" let g:SuperTabCrMapping = 1
+" let g:SuperTabMappingForward  = '<s-tab>'
+" let g:SuperTabMappingBackward = '<tab>'
+" packadd supertab
+"
+" ===== "Copilot" =====
+if has("nvim")
+  packadd copilot.vim
+else
+  let g:SuperTabCrMapping = 1
+  let g:SuperTabMappingForward  = '<s-tab>'
+  let g:SuperTabMappingBackward = '<tab>'
+  packadd supertab
+endif
+
+
 
 " ===== "argwrap" =====
 nnoremap <silent> <leader>a :ArgWrap<CR>

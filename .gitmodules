@@ -91,3 +91,6 @@
 [submodule "vim/pack/mjqzhang/start/ack.vim"]
 	path = vim/pack/mjqzhang/start/ack.vim
 	url = git@github.com:mileszs/ack.vim.git
+[submodule "vim/pack/mjqzhang/start/copilot.vim"]
+	path = vim/pack/mjqzhang/start/copilot.vim
+	url = https://github.com/github/copilot.vim.git
