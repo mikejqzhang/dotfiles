@@ -109,7 +109,9 @@ tks()
 alias ipy='ipython'
 alias smi='nvidia-smi'
 alias sq='squeue'
-alias vim='nvim'
+if command -v nvim &> /dev/null; then
+  alias vim='nvim'
+fi
 
 jupyter_remote()
 {
