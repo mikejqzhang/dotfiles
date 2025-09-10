@@ -167,8 +167,13 @@ let g:lightline = {
 
 " ===== "nerdtree" =====
 " Close the tab if NERDTree is the only window remaining in it.
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() 
-      \ | quit | endif
+if has("nvim")
+  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && 
+        \ b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+else
+  autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() 
+        \ | quit | endif
+endif
 
 nnoremap <leader>n :NERDTreeToggle<CR>
 " nnoremap <leader>f :NERDTreeFind<CR>
@@ -240,20 +245,19 @@ endfunction
 " endif
 "
 " ===== "Completion" =====
-" let g:SuperTabCrMapping = 1
-" let g:SuperTabMappingForward  = '<s-tab>'
-" let g:SuperTabMappingBackward = '<tab>'
-" packadd supertab
+let g:SuperTabCrMapping = 1
+let g:SuperTabMappingForward  = '<s-tab>'
+let g:SuperTabMappingBackward = '<tab>'
+packadd supertab
 "
 " ===== "Copilot" =====
 if has("nvim")
+  let g:copilot_filetypes = { '*': v:false }
+  nnoremap <silent> <leader>e :Copilot enable<CR>
   nnoremap <silent> <leader>c :Copilot panel<CR>
+  imap <silent><script><expr> <C-e> copilot#Accept("\<CR>")
+  let g:copilot_no_tab_map = v:true
   packadd copilot.vim
-else
-  let g:SuperTabCrMapping = 1
-  let g:SuperTabMappingForward  = '<s-tab>'
-  let g:SuperTabMappingBackward = '<tab>'
-  packadd supertab
 endif
 
 
